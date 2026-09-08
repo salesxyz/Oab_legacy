@@ -1,0 +1,59 @@
+.section {
+  padding-block: var(--space-20);
+  background: var(--color-surface);
+}
+
+.heading {
+  max-width: 46ch;
+  margin-bottom: var(--space-12);
+}
+
+.eyebrow {
+  color: var(--color-secondary);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+}
+
+.steps {
+  display: grid;
+  gap: var(--space-8);
+  counter-reset: step;
+}
+
+.step {
+  display: flex;
+  gap: var(--space-5);
+}
+
+.stepNumber {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-secondary);
+  color: var(--color-secondary);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-sm);
+}
+
+.stepTitle {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-1);
+}
+
+.stepDescription {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  max-width: 46ch;
+}
+
+@media (min-width: 720px) {
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: var(--space-10);
+  }
+}

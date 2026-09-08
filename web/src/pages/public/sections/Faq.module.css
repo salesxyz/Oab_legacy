@@ -1,0 +1,25 @@
+.section {
+  padding-block: var(--space-20);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.heading {
+  max-width: 40ch;
+}
+
+.eyebrow {
+  color: var(--color-secondary);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+}
+
+@media (min-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr 1.6fr;
+    gap: var(--space-16);
+  }
+}

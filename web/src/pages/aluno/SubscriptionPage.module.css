@@ -1,0 +1,72 @@
+.page { max-width: 1060px; margin: 0 auto; padding: var(--space-6) var(--space-5) var(--space-8); }
+.header { margin-bottom: 28px; }
+.header h1 { margin: 0; font-size: var(--text-2xl); }
+.eyebrow, .kicker { margin: 0 0 7px; color: var(--color-secondary); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+.subtitle { margin: 8px 0 0; color: var(--color-text-muted); font-size: var(--text-sm); }
+.checkoutGrid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(280px, .75fr); gap: 18px; margin-bottom: 18px; }
+.paymentPanel, .orderSummary { border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; background: var(--color-surface); box-shadow: var(--shadow-sm); }
+.panelHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.panelHeading > svg { color: var(--color-success); }
+.panelHeading h2, .orderSummary h2 { margin: 0; color: var(--color-primary); font-size: var(--text-xl); }
+.methodTabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 24px 0; }
+.methodTabs button { border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 11px 8px; background: #fff; color: var(--color-text-muted); font: 700 11px var(--font-body); cursor: pointer; }
+.methodTabs button:hover, .methodTabs .methodActive { border-color: var(--color-secondary); background: #eff6ff; color: var(--color-secondary); }
+.cardForm { display: grid; gap: 14px; }
+.cardForm label { display: grid; gap: 6px; color: var(--color-primary); font-size: 12px; font-weight: 700; }
+.cardForm input { width: 100%; box-sizing: border-box; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 11px 12px; color: var(--color-text); font: 400 13px var(--font-body); background: #fff; }
+.cardForm input:focus { border-color: var(--color-secondary); outline: 2px solid #bfdbfe; outline-offset: 0; }
+.cardForm input[aria-invalid="true"] { border-color: var(--color-danger); }
+.cardForm small { color: var(--color-danger); font-size: 11px; font-weight: 500; }
+.installmentLabel { display: grid; gap: 6px; color: var(--color-primary); font-size: 12px; font-weight: 700; }
+.installmentLabel select { width: 100%; box-sizing: border-box; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 11px 12px; color: var(--color-text); font: 400 13px var(--font-body); background: #fff; }
+.installmentLabel .installmentHint { color: var(--color-success); font-size: 11px; font-weight: 600; }
+.paymentModeNote { margin: -2px 0 0; color: var(--color-text-muted); font-size: 11px; }
+.inputRow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.submitButton, .copyButton { border: 0; border-radius: var(--radius-sm); padding: 13px 16px; background: var(--color-primary); color: white; font: 800 13px var(--font-body); cursor: pointer; }
+.submitButton { margin-top: 4px; }
+.submitButton:hover, .copyButton:hover { background: var(--color-primary-hover); }
+.submitButton:disabled { opacity: .65; cursor: wait; }
+.secureNote { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 17px 0 0; color: var(--color-text-muted); font-size: 11px; }
+.secureNote svg { color: var(--color-success); }
+.orderSummary { border-color: #d9bd62; background: #fffdf6; }
+.summaryDescription { margin: 7px 0 20px; color: var(--color-text-muted); font-size: 12px; line-height: 1.5; }
+.orderSummary ul { display: grid; gap: 11px; padding: 0 0 19px; margin: 0; border-bottom: 1px solid #eadfb8; list-style: none; }
+.orderSummary li { display: flex; gap: 8px; color: var(--color-text); font-size: 12px; }
+.orderSummary li svg { color: var(--color-success); flex-shrink: 0; }
+.total { display: flex; align-items: end; justify-content: space-between; gap: 12px; padding-top: 18px; color: var(--color-text-muted); font-size: 12px; }
+.total strong { color: var(--color-primary); font: 800 var(--text-xl) var(--font-display); }
+.total small { margin-left: 4px; color: var(--color-text-muted); font: 600 11px var(--font-body); }
+.cancelNote { margin: 17px 0 0; color: var(--color-text-muted); font-size: 10px; line-height: 1.5; }
+.installmentSummary { margin: 13px 0 0; color: var(--color-secondary); font-size: 12px; }
+.installmentSummary strong { font-weight: 800; }
+.pixInfo, .pixResult { display: flex; align-items: center; gap: 16px; min-height: 220px; }
+.pixResult { justify-content: space-between; }
+.pixResult h3, .pixInfo h3 { margin: 0 0 6px; color: var(--color-primary); font-size: var(--text-lg); }
+.pixResult p, .pixInfo p { margin: 0 0 16px; color: var(--color-text-muted); font-size: 12px; line-height: 1.5; }
+.pixResult img { width: 180px; height: 180px; padding: 8px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: white; }
+.pixMark { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: #dcfce7; color: #15803d; font-weight: 800; }
+.copyButton { background: var(--color-secondary); font-size: 11px; }
+.pixCode { display: block; max-width: 100%; margin-top: 12px; overflow-wrap: anywhere; color: var(--color-text-muted); font: 400 10px/1.45 var(--font-body); }
+.currentPlan { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; border: 1px solid #d9e5fa; border-radius: var(--radius-lg); padding: 20px; background: #f7faff; }
+.planIcon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 12px; background: var(--color-primary); color: var(--color-accent); flex-shrink: 0; }
+.planCopy { flex: 1; }
+.planCopy h2, .card h2, .billing h2 { margin: 0; color: var(--color-primary); font-size: var(--text-lg); }
+.planCopy p:last-child, .billing p { margin: 5px 0 0; color: var(--color-text-muted); font-size: 12px; }
+.activeBadge { border-radius: 999px; padding: 6px 10px; background: var(--color-success-bg); color: var(--color-success); font-size: 11px; font-weight: 800; }
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.card { border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 20px; background: var(--color-surface); }
+.premiumCard { border-color: #d9bd62; background: #fffdf6; }
+.cardHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.price { color: var(--color-primary); font: 800 var(--text-xl) var(--font-display); white-space: nowrap; }
+.price small { font: 600 11px var(--font-body); color: var(--color-text-muted); }
+.card ul { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; }
+.card li { display: flex; align-items: flex-start; gap: 9px; color: var(--color-text); font-size: 13px; }
+.card li svg { color: var(--color-success); flex-shrink: 0; }
+.premiumDescription { margin: -8px 0 17px; color: var(--color-text-muted); font-size: 12px; }
+.cta { display: block; margin-top: 21px; border-radius: 7px; padding: 11px 14px; background: var(--color-primary); color: white; text-align: center; font-size: 12px; font-weight: 700; }
+.note { margin: 11px 0 0; color: var(--color-text-muted); font-size: 10px; line-height: 1.4; }
+.billing { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-top: 16px; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 18px 20px; background: white; }
+.billing > span { color: var(--color-text-muted); font-size: 12px; font-weight: 700; }
+@media (min-width: 900px) { .page { padding: var(--space-8) var(--space-8) var(--space-10); } }
+@media (max-width: 640px) { .page { padding-inline: var(--space-4); } .currentPlan { align-items: flex-start; flex-wrap: wrap; } .activeBadge { margin-left: 64px; } .columns { grid-template-columns: 1fr; } .billing { align-items: flex-start; flex-direction: column; } }
+@media (max-width: 760px) { .checkoutGrid { grid-template-columns: 1fr; } .pixResult { align-items: flex-start; flex-direction: column-reverse; } .pixResult img { align-self: center; } }

@@ -1,0 +1,27 @@
+.section {
+  padding-block: var(--space-20);
+  background: var(--color-primary);
+  text-align: center;
+}
+
+.heading {
+  color: var(--color-text-on-primary);
+  max-width: 34ch;
+  margin-inline: auto;
+}
+
+.subhead {
+  margin-top: var(--space-4);
+  color: var(--color-text-on-primary-muted);
+  font-size: var(--text-lg);
+  max-width: 46ch;
+  margin-inline: auto;
+}
+
+.ctaRow {
+  margin-top: var(--space-8);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}

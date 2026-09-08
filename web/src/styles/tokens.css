@@ -1,0 +1,111 @@
+/**
+ * OAB Mentoria — Design tokens
+ *
+ * A paleta abaixo segue os valores literais definidos no documento de
+ * especificação (seção 56) — não são aproximações. As extensões
+ * (espaçamento, tipografia, sombras, breakpoints, transições) seguem o
+ * mesmo espírito: uma fonte única de verdade para todo o frontend.
+ */
+
+:root {
+  /* ---------- Cor ---------- */
+  --color-primary: #0b1f3a; /* azul-marinho — confiança, autoridade */
+  --color-primary-hover: #142c52;
+  --color-secondary: #1d4ed8; /* azul — ação primária */
+  --color-secondary-hover: #1e40af;
+  --color-tertiary: #3b82f6; /* azul claro — destaques secundários */
+  --color-accent: #d4af37; /* dourado — conquista, premium (uso comedido) */
+  --color-accent-hover: #b8952c;
+
+  --color-background: #f3f4f6;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #eceef1;
+
+  --color-text: #1f2937;
+  --color-text-muted: #6b7280;
+  --color-text-on-primary: #f7f8fa;
+  --color-text-on-primary-muted: #aab4c8;
+
+  --color-success: #16a34a;
+  --color-success-bg: #ecfdf3;
+  --color-danger: #dc2626;
+  --color-danger-bg: #fef2f2;
+
+  --color-border: #e2e5ea;
+  --color-border-on-primary: rgba(247, 248, 250, 0.14);
+  --color-focus-ring: #3b82f6;
+
+  /* ---------- Tipografia ---------- */
+  --font-display: 'Manrope', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --text-xs: 0.8125rem; /* 13px */
+  --text-sm: 0.9375rem; /* 15px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.375rem; /* 22px */
+  --text-2xl: 1.75rem; /* 28px */
+  --text-3xl: 2.25rem; /* 36px */
+  --text-4xl: 3rem; /* 48px */
+  --text-5xl: 3.75rem; /* 60px */
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.6;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  /* ---------- Espaçamento (escala 4px) ---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* ---------- Raio e sombra ---------- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(11, 31, 58, 0.06);
+  --shadow-md: 0 4px 16px rgba(11, 31, 58, 0.08);
+  --shadow-lg: 0 12px 32px rgba(11, 31, 58, 0.12);
+
+  /* ---------- Layout ---------- */
+  --container-width: 1200px;
+  --header-height: 76px;
+
+  /* ---------- Transições ---------- */
+  --transition-fast: 150ms ease;
+  --transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- Breakpoints (referência — usados via media query direta) ----------
+   --bp-sm: 375px   telefones
+   --bp-md: 768px   tablets
+   --bp-lg: 1024px  laptops
+   --bp-xl: 1280px  desktops
+   --bp-2xl: 1440px desktops grandes
+------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+    --transition-slow: 0ms;
+  }
+}

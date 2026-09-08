@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 250" role="img" aria-labelledby="title desc">
+  <title id="title">OAB Legacy</title>
+  <desc id="desc">Livro aberto com balancas da justica e o texto OAB Legacy</desc>
+  <g fill="none" stroke="#343434" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke-width="10" d="M310 62C270 16 220 10 126 10v158c72 0 130 12 184 48V62Zm0 0c40-46 90-52 184-52v158c-72 0-130 12-184 48V62Z"/>
+    <path stroke-width="8" d="M310 81c-29-34-68-42-128-42v102c52 0 91 8 128 32V81Zm0 0c29-34 68-42 128-42v102c-52 0-91 8-128 32V81Z"/>
+    <path stroke-width="8" d="M310 70v170M310 240l-17 0m17 0 17 0"/>
+    <path stroke-width="7" d="M310 105c-17-19-38-21-38-2 0 13 12 18 23 28l15 14m0-40c17-19 38-21 38-2 0 13-12 18-23 28l-15 14"/>
+    <circle stroke-width="7" cx="272" cy="103" r="11" fill="#dfc891"/>
+    <circle stroke-width="7" cx="348" cy="103" r="11" fill="#dfc891"/>
+    <circle stroke-width="8" cx="310" cy="240" r="20" fill="#dfc891"/>
+    <path stroke-width="8" d="M169 55l-42 90m42-90 42 90m-84 0h84m-74 0c6 33 58 33 64 0m200-90 42 90m-42-90-42 90m0 0h84m-74 0c6 33 58 33 64 0"/>
+  </g>
+  <g fill="#343434" font-family="Georgia, serif" text-anchor="middle">
+    <text x="310" y="205" font-size="44" letter-spacing="4">OAB LEGACY</text>
+    <text x="310" y="232" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">PLATAFORMA DE ESTUDOS</text>
+  </g>
+</svg>

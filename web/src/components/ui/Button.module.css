@@ -1,0 +1,103 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  line-height: 1;
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+  border: 1px solid transparent;
+  transition: background-color var(--transition-base), border-color var(--transition-base),
+    color var(--transition-base), transform var(--transition-fast);
+  white-space: nowrap;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+.spinner {
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Primária: ação principal da tela (ex.: "Começar agora"). */
+.primary {
+  background: var(--color-secondary);
+  color: var(--color-text-on-primary);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--color-secondary-hover);
+}
+
+/* Sobre fundo escuro (navy): usada dentro do hero e do rodapé. */
+.onDark {
+  background: var(--color-text-on-primary);
+  color: var(--color-primary);
+}
+
+.onDark:hover:not(:disabled) {
+  background: #d8dde6;
+}
+
+/* Secundária: ação de apoio, contorno discreto. */
+.secondary {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.secondary:hover:not(:disabled) {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+.secondaryOnDark {
+  background: transparent;
+  color: var(--color-text-on-primary);
+  border-color: var(--color-border-on-primary);
+}
+
+.secondaryOnDark:hover:not(:disabled) {
+  border-color: var(--color-text-on-primary);
+}
+
+/* Texto puro: navegação, links de ação leve. */
+.ghost {
+  background: transparent;
+  color: var(--color-secondary);
+  padding: var(--space-2) var(--space-3);
+}
+
+.ghost:hover:not(:disabled) {
+  color: var(--color-secondary-hover);
+}
+
+.sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.lg {
+  padding: var(--space-5) var(--space-8);
+  font-size: var(--text-lg);
+}
+
+.fullWidth {
+  width: 100%;
+}
