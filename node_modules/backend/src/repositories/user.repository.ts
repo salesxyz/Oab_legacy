@@ -178,7 +178,7 @@ export const userRepository = {
         COUNT(DISTINCT ua.id) FILTER (WHERE ua.correct = true)::int AS "correctAnswers",
         MAX(COALESCE(p.started_at, ua.answered_at)) AS "lastActivityAt"
       FROM filtered_students fs
-      CROSS JOIN modules m
+      LEFT JOIN modules m ON true
       LEFT JOIN contents c ON c.module_id = m.id
       LEFT JOIN progress p ON p.content_id = c.id AND p.user_id = fs.id
       LEFT JOIN questions q ON q.module_id = m.id
@@ -199,8 +199,8 @@ export const userRepository = {
       approvedAt: string | null;
       createdAt: string;
       lastLoginAt: string | null;
-      moduleId: string;
-      moduleTitle: string;
+      moduleId: string | null;
+      moduleTitle: string | null;
       totalContents: number;
       completedContents: number;
       progressPercent: number;
@@ -250,15 +250,17 @@ export const userRepository = {
       const accuracyPercent = row.answeredQuestions > 0
         ? Math.round((row.correctAnswers / row.answeredQuestions) * 100)
         : null;
-      student.modules.push({
-        id: row.moduleId,
-        title: row.moduleTitle,
-        progressPercent: row.progressPercent,
-        completedContents: row.completedContents,
-        totalContents: row.totalContents,
-        accuracyPercent,
-        lastActivityAt: row.lastActivityAt,
-      });
+      if (row.moduleId) {
+        student.modules.push({
+          id: row.moduleId,
+          title: row.moduleTitle ?? '',
+          progressPercent: row.progressPercent,
+          completedContents: row.completedContents,
+          totalContents: row.totalContents,
+          accuracyPercent,
+          lastActivityAt: row.lastActivityAt,
+        });
+      }
       students.set(row.id, student);
     }
 

@@ -1,14 +1,29 @@
 export const nav = [
-  { label: 'Como funciona', href: '#como-funciona' },
-  { label: 'Disciplinas', href: '#disciplinas' },
-  { label: 'Planos', href: '#planos' },
-  { label: 'Perguntas frequentes', href: '#faq' },
+  { label: 'Como funciona', href: '/#como-funciona' },
+  { label: 'Disciplinas', href: '/#disciplinas' },
+  { label: 'Planos', href: '/#planos' },
+  { label: 'Perguntas frequentes', href: '/#faq' },
 ];
 
 export const heroStats = [
   { value: '12.400+', label: 'questões comentadas' },
-  { value: '9', label: 'disciplinas do edital' },
-  { value: '2010–2026', label: 'provas anteriores da FGV' },
+  { value: '2', label: 'fases acompanhadas' },
+  { value: '2010–2026', label: 'provas e exames analisados' },
+];
+
+export const examPhases = [
+  {
+    label: 'Fase 1 · Objetiva',
+    title: 'Construa uma base sólida nas disciplinas do edital.',
+    description: 'Estude a teoria essencial, pratique com questões comentadas e use simulados para medir seu ritmo antes da prova.',
+    items: ['Trilha por disciplina e assunto', 'Questões de provas anteriores', 'Simulados com desempenho por matéria'],
+  },
+  {
+    label: 'Fase 2 · Prático-profissional',
+    title: 'Prepare-se para escrever e sustentar sua aprovação.',
+    description: 'Depois da objetiva, avance para a área escolhida com prática orientada, modelos de peças e treino de questões discursivas.',
+    items: ['Escolha e acompanhamento da área', 'Treino de peças e questões discursivas', 'Correção e evolução por competência'],
+  },
 ];
 
 export const features = [
@@ -80,9 +95,9 @@ export const plans = {
     name: 'Básico',
     price: 'R$ 97,00',
     period: '/90 dias',
-    description: 'Acesso completo à plataforma por 90 dias para sua preparação.',
+    description: 'Acesso completo à base da primeira fase por 90 dias para organizar sua preparação.',
     features: [
-      'Módulos iniciais de cada disciplina',
+      'Módulos iniciais da preparação objetiva',
       'Banco de questões limitado por dia',
       'Acompanhamento básico de progresso',
       'Alguns desafios semanais',
@@ -92,11 +107,11 @@ export const plans = {
     name: 'Vitalício',
     price: 'R$ 2.997,99',
     period: 'até a aprovação',
-    description: 'Estude até passar na prova da OAB, com 60 dias extras após a aprovação.',
+    description: 'Acompanhe sua preparação nas duas fases até passar na prova da OAB, com 60 dias extras após a aprovação.',
     features: [
-      'Todos os módulos e disciplinas do edital',
+      'Todos os módulos das duas fases',
       'Banco completo de questões comentadas',
-      'Todas as videoaulas',
+      'Videoaulas e prática profissional',
       'Simulados ilimitados',
       'Estatísticas avançadas de desempenho',
       'Desafios e recomendações personalizadas',
@@ -109,7 +124,7 @@ export const faq = [
   {
     question: 'A plataforma segue o edital atual da OAB?',
     answer:
-      'Sim. Os módulos e disciplinas acompanham o edital vigente da 1ª fase, e o banco de questões é atualizado a cada novo exame aplicado.',
+      'Sim. A preparação é organizada por fase: começa com as disciplinas da prova objetiva e avança para a área e as habilidades da prova prático-profissional.',
   },
   {
     question: 'Os simulados têm o mesmo tempo da prova real?',
@@ -140,10 +155,10 @@ export const faq = [
 
 export const footerLinks = {
   plataforma: [
-    { label: 'Como funciona', href: '#como-funciona' },
-    { label: 'Disciplinas', href: '#disciplinas' },
-    { label: 'Planos', href: '#planos' },
-    { label: 'Perguntas frequentes', href: '#faq' },
+    { label: 'Como funciona', href: '/#como-funciona' },
+    { label: 'Disciplinas', href: '/#disciplinas' },
+    { label: 'Planos', href: '/#planos' },
+    { label: 'Perguntas frequentes', href: '/#faq' },
   ],
   legal: [
     { label: 'Termos de Uso', href: '/termos' },

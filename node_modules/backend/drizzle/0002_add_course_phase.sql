@@ -1,0 +1,1 @@
+ALTER TABLE "courses" ADD COLUMN "phase" varchar(20) DEFAULT 'OBJETIVA' NOT NULL;

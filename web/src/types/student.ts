@@ -1,12 +1,14 @@
 export type ContentStatus = 'RASCUNHO' | 'PUBLICADO';
 export type ContentType = 'VIDEO' | 'TEXTO' | 'PDF' | 'QUIZ';
 export type Difficulty = 'FACIL' | 'MEDIO' | 'DIFICIL';
+export type CoursePhase = 'OBJETIVA' | 'PRATICO_PROFISSIONAL';
 
 export interface Course {
   id: string;
   title: string;
   description: string | null;
   imageUrl: string | null;
+  phase: CoursePhase;
   status: ContentStatus;
   order: number;
 }

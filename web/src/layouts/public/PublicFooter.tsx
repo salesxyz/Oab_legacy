@@ -10,12 +10,11 @@ export function PublicFooter() {
       <Container>
         <div className={styles.top}>
           <div className={styles.brand}>
-            <a href="#top" className={styles.logo}>
-              <img src="/oab-legacy-logo.svg" alt="OAB Mentoria" />
+            <a href="/" className={styles.logo}>
+              OAB Mentoria
             </a>
             <p className={styles.tagline}>
-              Plataforma de estudos para a 1ª fase do Exame de Ordem: módulos por disciplina, questões comentadas de
-              provas anteriores e simulados cronometrados.
+              Preparação para as duas fases do Exame de Ordem: teoria, prática profissional, questões comentadas e acompanhamento até a aprovação.
             </p>
           </div>
 

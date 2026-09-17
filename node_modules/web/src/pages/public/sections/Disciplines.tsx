@@ -8,7 +8,7 @@ export function Disciplines() {
       <Container>
         <div className={styles.heading}>
           <p className={styles.eyebrow}>Disciplinas do edital</p>
-          <h2>As 9 disciplinas que mais aparecem na 1ª fase, todas com módulo próprio.</h2>
+          <h2>A base objetiva e a prática profissional em uma única jornada.</h2>
         </div>
 
         <ul className={styles.list} role="list">

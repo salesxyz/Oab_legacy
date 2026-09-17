@@ -43,6 +43,9 @@ export function CoursesPage() {
               onClick={() => navigate(`/app/cursos/${course.id}`)}
             >
               <p className={listStyles.courseTitle}>{course.title}</p>
+              <span className={listStyles.coursePhase}>
+                {course.phase === 'PRATICO_PROFISSIONAL' ? '2ª fase · Prático-profissional' : '1ª fase · Objetiva'}
+              </span>
               {course.description && <p className={listStyles.courseDescription}>{course.description}</p>}
             </button>
           ))}

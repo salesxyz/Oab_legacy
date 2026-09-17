@@ -38,8 +38,8 @@ export const questionService = {
     alternatives: Array<{ text: string; correct: boolean; order?: number }>;
   }) {
     const { alternatives, ...questionData } = data;
-    if (alternatives.length !== 5) {
-      throw ApiError.badRequest('A questão deve ter exatamente 5 alternativas.', 'INVALID_ALTERNATIVES');
+    if (alternatives.length < 3 || alternatives.length > 5) {
+      throw ApiError.badRequest('A questão deve ter entre 3 e 5 alternativas.', 'INVALID_ALTERNATIVES');
     }
     const correctCount = alternatives.filter((a) => a.correct).length;
     if (correctCount !== 1) {
@@ -52,8 +52,8 @@ export const questionService = {
     const { alternatives, ...questionData } = data as any;
     const question = await questionRepository.update(id, questionData);
     if (alternatives) {
-      if (alternatives.length !== 5) {
-        throw ApiError.badRequest('A questão deve ter exatamente 5 alternativas.', 'INVALID_ALTERNATIVES');
+      if (alternatives.length < 3 || alternatives.length > 5) {
+        throw ApiError.badRequest('A questão deve ter entre 3 e 5 alternativas.', 'INVALID_ALTERNATIVES');
       }
       const correctCount = alternatives.filter((a: any) => a.correct).length;
       if (correctCount !== 1) {

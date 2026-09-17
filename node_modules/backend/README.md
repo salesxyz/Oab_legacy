@@ -1,70 +1,61 @@
-# OAB Mentoria — Backend / API
+# OAB Mentoria API
 
-Backend da plataforma OAB Mentoria: autenticação, conteúdos, questões, simulados, gamificação e painel administrativo.
+API backend da plataforma de preparação para a OAB, desenvolvida para uso interno do produto e operação comercial da solução.
 
-> Esta é a **primeira fase** do projeto (backend + banco de dados). Website, aplicativo mobile e painel administrativo (frontend) são fases seguintes, que consumirão esta mesma API.
+> Este projeto é privado e não é open source. O conteúdo deste repositório deve ser usado apenas para desenvolvimento, manutenção e operação da aplicação sob a propriedade e autorização do projeto.
+
+## Visão geral
+
+- Node.js + Express
+- TypeScript
+- PostgreSQL + Drizzle ORM
+- JWT para autenticação
+- Swagger/OpenAPI em `/docs`
+- Middleware de segurança, validação e RBAC
+- Stack interna de produção para operação do produto
 
 ## Stack
 
-- **Runtime**: Node.js 20+ (testado com Node 22)
-- **Framework**: Express **5** (async/await nativo — não é mais necessário `express-async-errors`)
-- **ORM**: [Drizzle ORM](https://orm.drizzle.team/) (ver nota abaixo)
-- **Banco de dados**: PostgreSQL
-- **Autenticação**: JWT (access token) + refresh token opaco com rotação, armazenado com hash
-- **Validação**: Zod **4**
-- **Segurança**: Helmet, rate limiting, CORS configurável, bcrypt (senhas), hashing de código de recuperação
-- **Logs**: Winston
-- **Dev runner**: [tsx](https://tsx.is/) (hot-reload rápido baseado em esbuild)
-- **Testes**: Jest + Supertest
-- **Documentação**: Swagger / OpenAPI em `/docs`
+- Runtime: Node.js 20+
+- Framework: Express 5
+- ORM: Drizzle ORM
+- Banco: PostgreSQL
+- Validação: Zod
+- Segurança: Helmet, CORS, rate limiting, bcrypt
+- Documentação: Swagger UI
+- Testes: Jest + Supertest
 
-### Notas sobre versões (por que não "a mais nova de tudo, sempre")
+## Estrutura principal
 
-Esta seção documenta escolhas deliberadas onde "mais recente" foi pesado contra "não quebra":
-
-- **Express 5**: migrado de v4. Principal mudança de comportamento: `req.query` passou a ser uma propriedade somente-leitura (getter) — qualquer atribuição direta (`req.query = ...`) agora lança `TypeError` em runtime. O middleware de validação (`src/middlewares/validate.middleware.ts`) foi ajustado para usar `Object.defineProperty` em vez de atribuição direta. Rotas com parâmetros (`req.params.id`) também mudaram de tipo (`string` → `string | string[]`, pois o `path-to-regexp` v8 agora suporta parâmetros repetidos); centralizamos isso no helper `src/utils/params.ts` (`paramId`) em vez de espalhar `as string` pelo código.
-- **Zod 4**: migrado de v3. `AnyZodObject` foi removido do pacote; usamos `z.ZodType` no lugar. O restante da API (`.parse`, `.safeParse`, `.flatten()`, `z.coerce`, `.email()`, `.uuid()`) permaneceu compatível.
-- **`ts-node-dev` → `tsx`**: `ts-node-dev` não recebe publicações desde 2022 (projeto efetivamente abandonado). Trocado pelo `tsx`, hoje o padrão de facto para rodar TypeScript em desenvolvimento com hot-reload.
-- **TypeScript fixado em `^5.9.3` (não `7.x`)**: o TypeScript 7 já foi lançado, mas o `ts-jest@29` (usado pelos testes) declara `peerDependencies: { typescript: '>=4.3 <7' }` — ou seja, exclui explicitamente a v7. Atualizar quebraria a suíte de testes. Ficamos na última versão estável da série 5.x até o ecossistema de testes suportar a v7.
-- **`@types/node` fixado em `^22.x` (não `26.x`)**: o pacote de tipos mais recente descreve APIs de uma versão do Node ainda mais nova que a runtime realmente instalada neste projeto (Node 22 LTS). Usar tipos de uma versão futura do Node pode fazer o TypeScript "aceitar" APIs que não existem de fato no ambiente de execução. Se você fizer deploy em Node 24/26, atualize `@types/node` de acordo.
-- **`uuid` removido**: não era utilizado em nenhum lugar do código — o Drizzle já gera UUIDs via `defaultRandom()` no próprio Postgres. Dependência morta removida para reduzir superfície de ataque e tamanho do `node_modules`.
-- **Vulnerabilidade conhecida e aceita**: `npm audit` reporta uma vulnerabilidade moderada em `esbuild`, usada internamente pelo `drizzle-kit` (ferramenta de desenvolvimento) para carregar o arquivo de configuração — nunca roda em produção. `npm audit fix --force` rebaixaria o `drizzle-kit` para `0.18.1` (bem mais antigo que o atual `0.31.10`), o que seria um retrocesso real de funcionalidade para mitigar um risco que não existe no seu ambiente de produção. Deixamos como está; reavalie quando o `drizzle-kit` publicar uma versão com o `esbuild` corrigido internamente.
-
-### Por que Drizzle em vez de Prisma?
-
-O escopo original sugere Prisma. Prisma depende de um binário nativo ("query engine") baixado de `binaries.prisma.sh` durante a instalação. Em alguns ambientes corporativos/CI com bloqueio de rede a esse domínio, isso impede completamente o `prisma generate`/`migrate`. Drizzle é 100% TypeScript, usa o driver `pg` puro (sem binário nativo) e é uma ORM madura e amplamente adotada — uma alternativa direta e sem essa dependência de rede. Se o seu ambiente não tiver essa restrição, a migração para Prisma é possível, mas não é necessária.
-
-## Estrutura do projeto
-
-```
+```bash
 backend/
 ├── src/
-│   ├── app.ts                 # montagem do Express (middlewares + rotas)
-│   ├── server.ts              # bootstrap: sobe o servidor HTTP
-│   ├── config/                # env, logger
-│   ├── controllers/           # camada HTTP (request/response)
-│   ├── services/               # regras de negócio
-│   ├── repositories/          # acesso direto ao banco (Drizzle)
-│   ├── routes/                 # definição de rotas + validação + RBAC
-│   ├── middlewares/            # auth, rbac, validação, rate limit, erros
-│   ├── schemas/                 # schemas Zod
+│   ├── app.ts
+│   ├── server.ts
+│   ├── config/
+│   ├── controllers/
 │   ├── db/
-│   │   ├── client.ts           # pool + instância do Drizzle
-│   │   ├── schema/              # definição das tabelas
-│   │   └── seed.ts              # dados iniciais de desenvolvimento
-│   ├── docs/swagger.ts
+│   ├── docs/
+│   ├── middlewares/
+│   ├── repositories/
+│   ├── routes/
+│   ├── schemas/
+│   ├── services/
 │   └── utils/
-├── drizzle/                    # migrations SQL geradas
-├── tests/                      # testes de integração (Jest + Supertest)
-├── drizzle.config.ts
+├── drizzle/
+├── tests/
 ├── .env.example
-└── package.json
+├── drizzle.config.ts
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
-## Pré-requisitos
+## Requisitos
 
 - Node.js 20+
-- PostgreSQL 14+ rodando localmente ou acessível via rede
+- PostgreSQL em execução
+- npm ou pnpm
 
 ## Instalação
 
@@ -73,148 +64,242 @@ cd backend
 npm install
 ```
 
-## Configuração do `.env`
+## Variáveis de ambiente
+
+Crie um arquivo `.env` a partir do exemplo:
 
 ```bash
 cp .env.example .env
 ```
 
-Edite o `.env` com seus valores. Principais variáveis:
+As variáveis principais são:
 
-| Variável | Descrição |
-|---|---|
-| `DATABASE_URL` | String de conexão PostgreSQL |
-| `VIDEO_STORAGE_DIR` | Diretório local dos uploads de vídeo; em produção, substitua por um storage de objetos |
-| `VIDEO_MAX_SIZE_MB` | Tamanho máximo de cada videoaula (padrão: 500 MB) |
-| `JWT_SECRET` / `REFRESH_TOKEN_SECRET` | Segredos para assinatura de tokens — **gere valores fortes e únicos em produção** |
-| `EMAIL_PROVIDER` | `console` (padrão, apenas loga) \| `resend` \| `sendgrid` \| `smtp` |
-| `EMAIL_API_KEY` | Chave da API do provedor de email escolhido |
-| `CORS_ALLOWED_ORIGINS` | Origens permitidas, separadas por vírgula |
-| `SEED_TEST_USER_EMAIL` / `SEED_TEST_USER_PASSWORD` | Credenciais do usuário de teste (seed) |
-| `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` | Credenciais do admin (seed) |
-| `SEED_MENTOR_EMAIL` / `SEED_MENTOR_PASSWORD` | Credenciais do mentor/professor (seed) |
+```env
+PORT=3333
+NODE_ENV=development
+DATABASE_URL=postgresql://user:password@host:5432/oab_mentoria
+JWT_SECRET=troque_este_valor
+JWT_REFRESH_SECRET=troque_este_valor
+APP_URL=http://localhost:3333
+WEB_URL=http://localhost:5173
+CORS_ALLOWED_ORIGINS=http://localhost:5173
+EMAIL_PROVIDER=console
+EMAIL_API_KEY=
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+VIDEO_STORAGE_DIR=./storage/videos
+VIDEO_MAX_SIZE_MB=500
+```
 
-⚠️ **As credenciais de seed são apenas para desenvolvimento.** Nunca as utilize como padrão em produção — o script de seed recusa-se a rodar se `NODE_ENV=production`.
+> Em produção, os secrets devem ser reais e fortes. Nunca deixar valores padrão ou de exemplo em produção.
 
 ## Banco de dados
 
-Crie o banco (exemplo local):
+Gerar e aplicar migrations:
 
 ```bash
-createdb oab_mentoria
-createdb oab_mentoria_test   # usado pelos testes automatizados
+npm run db:generate
+npm run db:migrate
 ```
 
-Gere e aplique as migrations:
-
-```bash
-npm run db:generate   # gera SQL a partir do schema em src/db/schema
-npm run db:migrate    # aplica as migrations no banco definido em DATABASE_URL
-```
-
-Popule com dados iniciais (usuário de teste, admin, curso, questões, simulado, dicas, conquistas):
+Seed inicial:
 
 ```bash
 npm run db:seed
 ```
 
-Após o seed, você pode logar com:
-- **Aluno de teste**: `teste@exemplo.com` / `SenhaTeste123!`
-- **Admin**: `admin@exemplo.com` / `AdminTeste123!`
-- **Mentor/Professor**: `professor@exemplo.com` / `ProfessorTeste123!` — usuário real no banco com `role: MENTOR`, RBAC já bloqueia esse papel de rotas `/admin/*`. **Não existem endpoints específicos de mentor ainda** (ex.: "meus alunos", "dúvidas") — isso é trabalho futuro; hoje o papel só existe para autenticação e diferenciação de permissões.
-
-(valores configuráveis via `.env`)
-
-## Rodando em desenvolvimento
+## Execução local
 
 ```bash
 npm run dev
 ```
 
-A API sobe em `http://localhost:3333` (ou a porta definida em `PORT`).
+A API fica em:
+- http://localhost:3333
+- Swagger em http://localhost:3333/docs
+- health check em http://localhost:3333/health
 
-- Health check: `GET /health`
-- Documentação Swagger: `GET /docs`
-
-## Build e execução em produção
+## Build
 
 ```bash
 npm run build
+```
+
+Executar em produção:
+
+```bash
 npm start
 ```
 
-## Testes
+## Swagger / OpenAPI
 
-Os testes rodam contra um banco PostgreSQL **real** (não usam mocks), definido em `.env.test`. Crie/aponte para um banco de testes dedicado antes de rodar:
+A documentação interativa está disponível em:
 
-```bash
-cp .env .env.test
-# edite .env.test para apontar DATABASE_URL para oab_mentoria_test e NODE_ENV=test
-
-npm run db:migrate -- (com DATABASE_URL de .env.test)
-npm test
+```text
+/docs
 ```
 
-Os testes cobrem: cadastro/login/logout, refresh com rotação e revogação, recuperação de senha, RBAC (aluno vs admin), CRUD de conteúdo, criação e resposta de questões (garantindo que a alternativa correta nunca é revelada antes da resposta), fluxo completo de simulado, e tratamento de erros sem vazamento de stack trace.
+Ela expõe endpoints de:
+- Auth
+- Courses
+- Questions
+- Simulations
+- Profile
+- Tips
+- Admin
+- Health
 
 ## Endpoints principais
 
-Documentação interativa completa em `/docs`. Resumo:
+### Autenticação
 
-```
-POST   /auth/register
-POST   /auth/login
-POST   /auth/refresh
-POST   /auth/logout
-POST   /auth/logout-all
-POST   /auth/forgot-password
-POST   /auth/verify-code
-POST   /auth/reset-password
-POST   /auth/change-password
-
-GET    /courses                        GET    /courses/:id
-POST   /courses (admin)                 PATCH  /courses/:id (admin)
-GET    /courses/:courseId/modules       POST   /modules (admin)
-GET    /modules/:moduleId/contents      POST   /contents (admin)
-POST   /contents/:id/progress           (aluno autenticado)
-
-GET    /questions                       GET    /questions/:id
-POST   /questions (admin)               POST   /questions/:id/answer
-GET    /questions/history               GET    /questions/performance
-
-GET    /simulations                     POST   /simulations (admin)
-POST   /simulations/:id/start           POST   /simulations/:id/finish
-GET    /simulations/my-results
-
-GET    /tips/of-the-day                 GET/POST/PATCH/DELETE /tips (admin)
-
-GET    /profile                         PATCH  /profile
-GET    /progress                        GET    /achievements
-GET    /ranking
-
-GET    /admin/dashboard                 GET    /admin/users
-PATCH  /admin/users/:id/status          PATCH  /admin/users/:id/role
-
-GET    /health
+```http
+POST /auth/register
+POST /auth/login
+POST /auth/refresh
+POST /auth/logout
+POST /auth/logout-all
+POST /auth/forgot-password
+POST /auth/verify-code
+POST /auth/reset-password
+POST /auth/change-password
 ```
 
-## Segurança implementada
+### Conteúdo
 
-- Senhas com bcrypt (12 rounds); nunca armazenadas em texto puro
-- Refresh tokens opacos, armazenados apenas como hash SHA-256, com rotação e revogação
-- Códigos de recuperação de senha hasheados, com expiração e limite de tentativas; nunca logados
-- Respostas de login/recuperação de senha genéricas — não permitem enumerar usuários cadastrados
-- Bloqueio temporário de conta após múltiplas tentativas de login falhas
-- RBAC real no backend (nunca confia em validações do frontend); todo endpoint administrativo exige token + papel `ADMIN`
-- Rate limiting geral e um limite mais rígido específico para rotas de autenticação
-- Helmet, CORS configurável por ambiente, sanitização/validação de todas as entradas via Zod
-- Erros nunca vazam stack trace ou detalhes internos ao cliente
-- `.env.example` documentado; nenhum segredo real no repositório
+```http
+GET /courses
+GET /courses/:id
+POST /courses
+PATCH /courses/:id
+DELETE /courses/:id
 
-## Próximos passos (fora do escopo desta fase)
+GET /courses/:courseId/modules
+GET /modules/:id
+POST /modules
+PATCH /modules/:id
+DELETE /modules/:id
+POST /modules/reorder
 
-- Website (React + Tailwind) consumindo esta API
-- App mobile (Expo + React Native)
-- Painel administrativo (frontend) consumindo os endpoints `/admin/*`
-- Envio real de email em produção (basta configurar `EMAIL_PROVIDER` e `EMAIL_API_KEY`)
-- Termos de Uso / Política de Privacidade (LGPD) como conteúdo estático no frontend
+GET /modules/:moduleId/contents
+GET /contents/:id
+POST /contents
+PATCH /contents/:id
+DELETE /contents/:id
+POST /contents/upload-video
+POST /contents/:id/progress
+```
+
+### Questões
+
+```http
+GET /questions
+GET /questions/:id
+GET /questions/subjects
+GET /questions/history
+GET /questions/performance
+POST /questions
+PATCH /questions/:id
+DELETE /questions/:id
+POST /questions/:id/answer
+```
+
+### Simulados
+
+```http
+GET /simulations
+GET /simulations/:id
+GET /simulations/my-results
+POST /simulations
+PATCH /simulations/:id
+DELETE /simulations/:id
+POST /simulations/:id/start
+POST /simulations/:id/finish
+```
+
+### Perfil e gamificação
+
+```http
+GET /profile
+PATCH /profile
+PATCH /profile/preferences
+GET /progress
+GET /achievements
+GET /ranking
+GET /history/questions
+GET /history/simulations
+```
+
+### Dicas
+
+```http
+GET /tips/of-the-day
+GET /tips
+POST /tips
+PATCH /tips/:id
+DELETE /tips/:id
+```
+
+### Admin
+
+```http
+GET /admin/dashboard
+GET /admin/users
+GET /admin/users/:id
+PATCH /admin/users/:id/status
+PATCH /admin/users/:id/role
+PATCH /admin/users/:id/approval
+```
+
+### Pagamentos
+
+```http
+POST /payments/checkout
+POST /payments/webhook/stripe
+```
+
+## Segurança
+
+- Tokens JWT com expiração curta
+- Refresh token com rotação e armazenamento seguro
+- Senhas com bcrypt
+- CORS configurado por ambiente
+- Rate limiting nas rotas sensíveis
+- Controle de acesso por RBAC
+- Validação rigorosa com Zod
+- Logs e erros sem expor stack trace em produção
+- Proteção de dados e segredos conforme política interna do projeto
+
+## Testes
+
+```bash
+npm test
+```
+
+A suíte valida fluxos importantes de autenticação, permissões, conteúdo e simulado.
+
+## Observações de produção
+
+- Defina `NODE_ENV=production` em servidor real.
+- Use PostgreSQL real e não o banco local de desenvolvimento.
+- Configure `EMAIL_PROVIDER` e Stripe com chaves reais.
+- Ajuste `CORS_ALLOWED_ORIGINS` para seu domínio real.
+- Garanta armazenamento persistente para vídeos. 
+- Use PM2 + Nginx para atender em produção.
+
+## Uso interno e operação
+
+- manter este repositório em ambiente controlado
+- usar apenas para desenvolvimento, manutenção e operação do produto
+- não publicar código-fonte em repositórios públicos ou plataformas de código aberto
+- manter segredos e credenciais fora do controle de versão
+- seguir a política de deploy interna e de ambiente de produção do projeto
+
+## Próximos passos
+
+- configurar variáveis de produção
+- conectar banco de produção
+- subir backend em VPS/Hostinger
+- publicar frontend
+- configurar SSL e domínio
+- validar fluxo completo de assinatura e webhook

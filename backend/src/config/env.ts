@@ -32,6 +32,11 @@ const envSchema = z.object({
   SMTP_PASSWORD: z.string().optional().default(''),
 
   CORS_ALLOWED_ORIGINS: z.string().default('http://localhost:5173'),
+  STRIPE_SECRET_KEY: z.string().optional().default(''),
+  STRIPE_WEBHOOK_SECRET: z.string().optional().default(''),
+  STRIPE_CURRENCY: z.string().length(3).default('brl'),
+  STRIPE_BASIC_PRICE_CENTS: z.coerce.number().int().positive().default(9700),
+  STRIPE_LIFETIME_PRICE_CENTS: z.coerce.number().int().positive().default(299799),
 
   SEED_TEST_USER_EMAIL: z.string().optional().default('teste@exemplo.com'),
   SEED_TEST_USER_PASSWORD: z.string().optional().default('SenhaTeste123!'),
@@ -39,6 +44,25 @@ const envSchema = z.object({
   SEED_ADMIN_PASSWORD: z.string().optional().default('AdminTeste123!'),
   SEED_MENTOR_EMAIL: z.string().optional().default('professor@exemplo.com'),
   SEED_MENTOR_PASSWORD: z.string().optional().default('ProfessorTeste123!'),
+}).superRefine((config, context) => {
+  if (config.NODE_ENV !== 'production') return;
+
+  const exampleSecrets = ['troque_este_valor_por_um_segredo_forte', 'troque_este_valor_por_outro_segredo_forte'];
+  if (exampleSecrets.includes(config.JWT_SECRET) || config.JWT_SECRET === config.REFRESH_TOKEN_SECRET) {
+    context.addIssue({ code: 'custom', path: ['JWT_SECRET'], message: 'Use segredos únicos e fortes em produção.' });
+  }
+  if (exampleSecrets.includes(config.REFRESH_TOKEN_SECRET)) {
+    context.addIssue({ code: 'custom', path: ['REFRESH_TOKEN_SECRET'], message: 'Use segredos únicos e fortes em produção.' });
+  }
+  if (config.EMAIL_PROVIDER === 'console') {
+    context.addIssue({ code: 'custom', path: ['EMAIL_PROVIDER'], message: 'EMAIL_PROVIDER=console não é permitido em produção.' });
+  }
+  if (!config.STRIPE_SECRET_KEY || !config.STRIPE_WEBHOOK_SECRET) {
+    context.addIssue({ code: 'custom', path: ['STRIPE_SECRET_KEY'], message: 'Stripe deve estar configurado em produção.' });
+  }
+  if (config.CORS_ALLOWED_ORIGINS.split(',').some((origin) => origin.trim().includes('localhost'))) {
+    context.addIssue({ code: 'custom', path: ['CORS_ALLOWED_ORIGINS'], message: 'CORS de localhost não é permitido em produção.' });
+  }
 });
 
 const parsed = envSchema.safeParse(process.env);

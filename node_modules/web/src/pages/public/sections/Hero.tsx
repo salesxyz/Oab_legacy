@@ -10,10 +10,9 @@ export function Hero() {
       <Container>
         <div className={styles.grid}>
           <div className={styles.copy}>
-            <h1 className={styles.headline}>A primeira fase da OAB, estudada com método.</h1>
+            <h1 className={styles.headline}>Da primeira prova à aprovação na OAB.</h1>
             <p className={styles.subhead}>
-              Módulos organizados por disciplina, questões comentadas de provas anteriores e simulados cronometrados
-              — para você chegar no dia do exame sabendo exatamente onde está.
+              Uma jornada de preparação para as duas fases do Exame de Ordem: base objetiva, prática profissional e acompanhamento do seu avanço até a aprovação.
             </p>
             <div className={styles.ctaRow}>
               <Button as="link" to="/cadastro" size="lg">

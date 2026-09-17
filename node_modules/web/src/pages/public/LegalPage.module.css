@@ -1,0 +1,95 @@
+.page {
+  min-height: 60vh;
+  padding: var(--space-16) 0 var(--space-24);
+  background: var(--color-surface-muted);
+}
+
+.document {
+  width: min(100% - 2rem, 820px);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.5rem, 6vw, 5rem);
+  background: var(--color-surface);
+  border-top: 4px solid var(--color-accent);
+  border-inline: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.backLink {
+  display: inline-flex;
+  margin-bottom: var(--space-10);
+  color: var(--color-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.header {
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.eyebrow {
+  margin-bottom: var(--space-3);
+  color: var(--color-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: var(--leading-tight);
+}
+
+.updatedAt {
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.content {
+  padding-top: var(--space-8);
+  color: var(--color-text-muted);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
+
+.content > p {
+  color: var(--color-text);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+}
+
+.section {
+  margin-top: var(--space-8);
+}
+
+.section h2 {
+  margin-bottom: var(--space-3);
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: 0;
+  line-height: var(--leading-tight);
+}
+
+.section p + p {
+  margin-top: var(--space-4);
+}
+
+@media (max-width: 560px) {
+  .page {
+    padding-block: var(--space-6) var(--space-12);
+  }
+
+  .document {
+    width: min(100% - 1rem, 820px);
+    padding: var(--space-6) var(--space-5) var(--space-10);
+  }
+
+  .header h1 {
+    font-size: var(--text-3xl);
+  }
+}

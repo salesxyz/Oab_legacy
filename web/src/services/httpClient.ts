@@ -29,20 +29,16 @@ interface RequestOptions extends Omit<RequestInit, 'body'> {
 let refreshPromise: Promise<string | null> | null = null;
 
 async function refreshAccessToken(): Promise<string | null> {
-  const refreshToken = tokenStore.getRefreshToken();
-  if (!refreshToken) return null;
-
   if (!refreshPromise) {
     refreshPromise = fetch(`${API_URL}/auth/refresh`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refreshToken }),
+      credentials: 'include',
     })
       .then(async (res) => {
         if (!res.ok) return null;
         const data: AuthResponse = await res.json();
         tokenStore.setAccessToken(data.accessToken);
-        tokenStore.setRefreshToken(data.refreshToken, tokenStore.wasRemembered());
         return data.accessToken;
       })
       .catch(() => null)
@@ -78,6 +74,7 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     return fetch(`${API_URL}${path}`, {
       ...rest,
       headers: finalHeaders,
+      credentials: 'include',
       body: body === undefined ? undefined : isMultipart ? body : JSON.stringify(body),
     });
   };

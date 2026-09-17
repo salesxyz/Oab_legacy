@@ -18,7 +18,6 @@ export interface PublicUser {
 export interface AuthResponse {
   user: PublicUser;
   accessToken: string;
-  refreshToken: string;
 }
 
 /** Formato de erro devolvido pelo middleware central de erros do backend. */

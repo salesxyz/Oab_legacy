@@ -12,6 +12,7 @@ export function MentorSubjectsPage() {
   const [modules, setModules] = useState<ModuleSummary[]>([]);
   const [selectedCourse, setSelectedCourse] = useState('');
   const [courseTitle, setCourseTitle] = useState('');
+  const [coursePhase, setCoursePhase] = useState<Course['phase']>('OBJETIVA');
   const [moduleTitle, setModuleTitle] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -37,7 +38,7 @@ export function MentorSubjectsPage() {
     event.preventDefault();
     if (!courseTitle.trim()) return;
     setSaving(true); setError(null); setMessage(null);
-    try { const course = await managementApi.createCourse({ title: courseTitle.trim(), description: '', status: 'RASCUNHO' }); setCourseTitle(''); await loadCourses(); setSelectedCourse(course.id); setMessage('Matéria criada como rascunho.'); }
+    try { const course = await managementApi.createCourse({ title: courseTitle.trim(), description: '', phase: coursePhase, status: 'RASCUNHO' }); setCourseTitle(''); await loadCourses(); setSelectedCourse(course.id); setMessage('Matéria criada como rascunho.'); }
     catch (reason) { setError(getErrorMessage(reason, 'Não foi possível criar a matéria.')); }
     finally { setSaving(false); }
   }
@@ -58,7 +59,7 @@ export function MentorSubjectsPage() {
     {error && <div className={styles.error}><Alert type="error">{error}</Alert></div>}
     {message && <div className={styles.success}>{message}</div>}
     {loading ? <section className={styles.panel}><div className={styles.empty}>Carregando matérias...</div></section> : <>
-      <section className={styles.panel}><div className={styles.panelHeader}><div><h2 className={styles.panelTitle}>Adicionar matéria</h2><p className={styles.panelMeta}>Crie a disciplina como rascunho para organizar as aulas.</p></div><BookIcon /></div><form className={styles.form} onSubmit={createCourse}><label className={styles.field}>Nome da matéria<input className={styles.input} value={courseTitle} onChange={(event) => setCourseTitle(event.target.value)} placeholder="Ex.: Direito Constitucional" /></label><button className={styles.primaryButton} disabled={saving}>{saving ? 'Salvando...' : 'Criar matéria'}</button></form></section>
+      <section className={styles.panel}><div className={styles.panelHeader}><div><h2 className={styles.panelTitle}>Adicionar matéria</h2><p className={styles.panelMeta}>Crie a disciplina como rascunho para organizar as aulas.</p></div><BookIcon /></div><form className={styles.form} onSubmit={createCourse}><label className={styles.field}>Nome da matéria<input className={styles.input} value={courseTitle} onChange={(event) => setCourseTitle(event.target.value)} placeholder="Ex.: Direito Constitucional" /></label><label className={styles.field}>Fase da OAB<select className={styles.select} value={coursePhase} onChange={(event) => setCoursePhase(event.target.value as Course['phase'])}><option value="OBJETIVA">1ª fase · Objetiva</option><option value="PRATICO_PROFISSIONAL">2ª fase · Prático-profissional</option></select></label><button className={styles.primaryButton} disabled={saving}>{saving ? 'Salvando...' : 'Criar matéria'}</button></form></section>
       <section className={styles.panel}><div className={styles.panelHeader}><div><h2 className={styles.panelTitle}>Adicionar módulo</h2><p className={styles.panelMeta}>Escolha uma matéria e crie uma nova etapa de estudo.</p></div></div><form className={styles.form} onSubmit={createModule}><label className={styles.field}>Matéria<select className={styles.select} value={selectedCourse} onChange={(event) => setSelectedCourse(event.target.value)}><option value="">Selecione uma matéria</option>{courses.map((course) => <option key={course.id} value={course.id}>{course.title}</option>)}</select></label><label className={styles.field}>Nome do módulo<input className={styles.input} value={moduleTitle} onChange={(event) => setModuleTitle(event.target.value)} placeholder="Ex.: Princípios fundamentais" /></label><button className={styles.primaryButton} disabled={saving || !selectedCourse}>{saving ? 'Salvando...' : 'Criar módulo'}</button></form>{selectedCourse && <div className={styles.list}>{modules.map((module) => <div className={styles.listRow} key={module.id}><div><p className={styles.rowTitle}>{module.title}</p><p className={styles.rowMeta}>{module.totalContents} aulas cadastradas</p></div></div>)}</div>}</section>
       <section className={styles.panel}><div className={styles.callout}><p>Depois de criar a matéria e o módulo, use a área de aulas para enviar a videoaula.</p><Link className={styles.linkButton} to="/professor/aulas">Adicionar videoaula</Link></div></section>
     </>}

@@ -2,7 +2,7 @@ import winston from 'winston';
 import { isProduction } from './env';
 
 export const logger = winston.createLogger({
-  level: 'error',
+  level: isProduction ? 'info' : 'debug',
   format: isProduction
     ? winston.format.combine(winston.format.timestamp(), winston.format.json())
     : winston.format.combine(

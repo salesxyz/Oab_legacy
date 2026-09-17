@@ -14,7 +14,10 @@ export const createQuestionSchema = z.object({
   subject: z.string().trim().min(2).max(150),
   examBoard: z.string().trim().max(100).optional(),
   year: z.number().int().min(1990).max(2100).optional(),
-  alternatives: z.array(alternativeSchema).length(5, 'A questão deve ter exatamente 5 alternativas.'),
+  alternatives: z.array(alternativeSchema).min(3, 'A questão deve ter pelo menos 3 alternativas.').max(5, 'A questão pode ter no máximo 5 alternativas.').refine(
+    (alternatives) => alternatives.filter((alternative) => alternative.correct).length === 1,
+    'A questão deve ter exatamente uma alternativa correta.',
+  ),
 });
 
 export const updateQuestionSchema = createQuestionSchema.partial().extend({

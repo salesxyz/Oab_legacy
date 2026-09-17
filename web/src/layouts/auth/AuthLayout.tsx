@@ -14,7 +14,7 @@ export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
     <div className={styles.page}>
       <aside className={styles.brandPanel}>
         <Link to="/" className={styles.logo}>
-          <img src="/oab-legacy-logo.svg" alt="OAB Mentoria" />
+          OAB Mentoria
         </Link>
 
         <div className={styles.illustration}>
@@ -24,14 +24,14 @@ export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
         <div className={styles.brandMessage}>
           <h2 className={styles.brandHeadline}>Estude por módulos, não por acaso.</h2>
           <p className={styles.brandSubhead}>
-            Questões comentadas, videoaulas e simulados organizados nas 9 disciplinas do edital da 1ª fase.
+            Preparação organizada para as duas fases do Exame de Ordem, da base objetiva à prática profissional.
           </p>
         </div>
       </aside>
 
       <main className={styles.formPanel}>
         <Link to="/" className={styles.mobileLogo}>
-          <img src="/oab-legacy-logo.svg" alt="OAB Mentoria" />
+          OAB Mentoria
         </Link>
 
         <div className={styles.formCard}>

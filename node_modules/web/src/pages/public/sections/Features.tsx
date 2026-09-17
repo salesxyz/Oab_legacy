@@ -46,7 +46,7 @@ export function Features() {
     <section className={styles.section}>
       <Container>
         <div className={styles.heading}>
-          <p className={styles.eyebrow}>Uma plataforma, seis frentes de preparação</p>
+          <p className={styles.eyebrow}>Uma plataforma para cada etapa da prova</p>
           <p className={styles.lead}>
             Cada parte da plataforma existe para responder a uma pergunta específica da sua rotina de estudo.
           </p>

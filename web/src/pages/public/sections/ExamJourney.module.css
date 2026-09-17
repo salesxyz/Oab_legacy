@@ -1,0 +1,115 @@
+.section {
+  padding-block: var(--space-20);
+  background: var(--color-primary);
+  color: var(--color-text-on-primary-muted);
+}
+
+.heading {
+  max-width: 700px;
+}
+
+.eyebrow,
+.phaseLabel {
+  color: var(--color-accent);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.heading h2 {
+  margin-top: var(--space-3);
+  color: var(--color-text-on-primary);
+}
+
+.lead {
+  margin-top: var(--space-5);
+  color: var(--color-text-on-primary-muted);
+  font-size: var(--text-lg);
+}
+
+.timeline {
+  display: grid;
+  gap: var(--space-10);
+  margin-top: var(--space-12);
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 20px;
+  bottom: 20px;
+  width: 1px;
+  background: var(--color-border-on-primary);
+}
+
+.phase {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: var(--space-6);
+}
+
+.marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+}
+
+.phaseBody {
+  max-width: 620px;
+  padding-bottom: var(--space-2);
+}
+
+.phaseBody h3 {
+  margin-top: var(--space-2);
+  color: var(--color-text-on-primary);
+  font-size: var(--text-2xl);
+}
+
+.phaseBody > p:not(.phaseLabel) {
+  margin-top: var(--space-3);
+  color: var(--color-text-on-primary-muted);
+}
+
+.phaseBody ul {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+  padding-left: var(--space-5);
+  color: var(--color-text-on-primary);
+}
+
+.phaseBody li::marker {
+  color: var(--color-accent);
+}
+
+@media (min-width: 760px) {
+  .timeline {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-10);
+  }
+
+  .timeline::before {
+    display: none;
+  }
+
+  .phase {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    padding: var(--space-8);
+    border: 1px solid var(--color-border-on-primary);
+    border-radius: var(--radius-md);
+  }
+}

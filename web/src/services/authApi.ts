@@ -10,7 +10,7 @@ export const authApi = {
     });
   },
 
-  login(input: { email: string; password: string }) {
+  login(input: { email: string; password: string; remember: boolean }) {
     return apiRequest<AuthResponse>('/auth/login', {
       method: 'POST',
       body: input,
@@ -18,19 +18,17 @@ export const authApi = {
     });
   },
 
-  refresh(refreshToken: string) {
+  refresh() {
     return apiRequest<AuthResponse>('/auth/refresh', {
       method: 'POST',
-      body: { refreshToken },
       skipAuthHeader: true,
       skipAuthRetry: true,
     });
   },
 
-  logout(refreshToken: string) {
+  logout() {
     return apiRequest<void>('/auth/logout', {
       method: 'POST',
-      body: { refreshToken },
       skipAuthRetry: true,
     });
   },

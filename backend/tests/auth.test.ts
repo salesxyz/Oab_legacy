@@ -9,13 +9,17 @@ describe('Auth', () => {
 
   const user = { name: 'Teste Jest', email: 'jest.auth@teste.com', password: 'SenhaForte1' };
 
-  it('registra um novo usuário e retorna tokens', async () => {
+  it('registra um novo usuário e emite refresh token em cookie HttpOnly', async () => {
     const res = await request(app).post('/auth/register').send(user);
     expect(res.status).toBe(201);
     expect(res.body.user.email).toBe(user.email);
     expect(res.body.user.role).toBe('ALUNO');
     expect(res.body.accessToken).toBeDefined();
-    expect(res.body.refreshToken).toBeDefined();
+    expect(res.body.refreshToken).toBeUndefined();
+    const cookies = ([] as string[]).concat(res.headers['set-cookie'] ?? []);
+    expect(cookies.join(';')).toMatch(/oab_mentoria_refresh=/);
+    expect(cookies.join(';')).toMatch(/HttpOnly/);
+    expect(cookies.join(';')).toMatch(/SameSite=Strict/);
   });
 
   it('não permite cadastro duplicado com o mesmo email', async () => {
@@ -54,15 +58,18 @@ describe('Auth', () => {
   });
 
   it('rotaciona o refresh token e invalida o antigo', async () => {
-    const login = await request(app).post('/auth/login').send({ email: user.email, password: user.password });
-    const oldRefresh = login.body.refreshToken;
+    const agent = request.agent(app);
+    const login = await agent.post('/auth/login').send({ email: user.email, password: user.password, remember: true });
+    const loginCookies = ([] as string[]).concat(login.headers['set-cookie'] ?? []);
+    const oldRefreshCookie = loginCookies.find((cookie) => cookie.startsWith('oab_mentoria_refresh='))?.split(';')[0];
+    expect(oldRefreshCookie).toBeDefined();
 
-    const refreshRes = await request(app).post('/auth/refresh').send({ refreshToken: oldRefresh });
+    const refreshRes = await agent.post('/auth/refresh');
     expect(refreshRes.status).toBe(200);
-    expect(refreshRes.body.refreshToken).not.toBe(oldRefresh);
+    expect(refreshRes.body.refreshToken).toBeUndefined();
 
     // O token antigo não deve mais funcionar (rotação com revogação).
-    const reuseRes = await request(app).post('/auth/refresh').send({ refreshToken: oldRefresh });
+    const reuseRes = await request(app).post('/auth/refresh').set('Cookie', oldRefreshCookie!);
     expect(reuseRes.status).toBe(401);
   });
 

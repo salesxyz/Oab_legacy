@@ -8,7 +8,7 @@ export function HowItWorks() {
       <Container>
         <div className={styles.heading}>
           <p className={styles.eyebrow}>Como funciona</p>
-          <h2>Quatro passos entre abrir a plataforma e sentar para a prova.</h2>
+          <h2>Um método que acompanha a sua evolução nas duas fases.</h2>
         </div>
 
         <ol className={styles.steps} role="list">

@@ -40,8 +40,70 @@ const tipController = {
 
 const router = Router();
 
+/**
+ * @openapi
+ * /api/v1/tips/of-the-day:
+ *   get:
+ *     tags: [Tips]
+ *     summary: Dica do dia
+ *     responses:
+ *       200:
+ *         description: Dica retornada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               example:
+ *                 id: tip_123
+ *                 title: Dica do dia
+ *                 text: Revise os princípios fundamentais antes da prova objetiva.
+ *                 createdAt: '2026-09-13T15:30:00.000Z'
+ */
 router.get('/tips/of-the-day', tipController.ofTheDay);
+
+/**
+ * @openapi
+ * /api/v1/tips:
+ *   get:
+ *     tags: [Tips]
+ *     summary: Listar dicas
+ *     responses:
+ *       200:
+ *         description: Lista de dicas retornada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   text:
+ *                     type: string
+ *             examples:
+ *               success:
+ *                 value:
+ *                   - id: tip_123
+ *                     title: Dica de revisão
+ *                     text: Estude os temas mais recorrentes da semana.
+ */
 router.get('/tips', optionalAuthMiddleware, tipController.list);
+
+/**
+ * @openapi
+ * /api/v1/tips:
+ *   post:
+ *     tags: [Tips]
+ *     summary: Criar dica
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: Dica criada
+ */
 router.post('/tips', authMiddleware, requireAdmin, validate({ body: createTipSchema }), tipController.create);
 router.patch(
   '/tips/:id',

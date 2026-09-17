@@ -14,6 +14,19 @@ import { logger } from '../config/logger';
 const router = Router();
 router.use(authMiddleware, requireAdmin);
 
+/**
+ * @openapi
+ * /api/v1/admin/dashboard:
+ *   get:
+ *     tags: [Admin]
+ *     summary: Dashboard administrativo
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Estatísticas do painel administrativo
+ */
+
 const listUsersQuerySchema = z.object({
   search: z.string().optional(),
   page: z.coerce.number().int().min(1).default(1),
@@ -31,6 +44,18 @@ router.get(
   }),
 );
 
+/**
+ * @openapi
+ * /api/v1/admin/users:
+ *   get:
+ *     tags: [Admin]
+ *     summary: Listar usuários
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de usuários
+ */
 router.get(
   '/users',
   validate({ query: listUsersQuerySchema }),
@@ -41,6 +66,18 @@ router.get(
   }),
 );
 
+/**
+ * @openapi
+ * /api/v1/admin/users/{id}:
+ *   get:
+ *     tags: [Admin]
+ *     summary: Buscar usuário por id
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Usuário encontrado
+ */
 router.get(
   '/users/:id',
   asyncHandler(async (req: Request, res: Response) => {
@@ -51,6 +88,18 @@ router.get(
   }),
 );
 
+/**
+ * @openapi
+ * /api/v1/admin/users/{id}/status:
+ *   patch:
+ *     tags: [Admin]
+ *     summary: Alterar status do usuário
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Status atualizado
+ */
 router.patch(
   '/users/:id/status',
   validate({ body: setStatusSchema }),
@@ -60,6 +109,18 @@ router.patch(
   }),
 );
 
+/**
+ * @openapi
+ * /api/v1/admin/users/{id}/role:
+ *   patch:
+ *     tags: [Admin]
+ *     summary: Alterar papel do usuário
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Papel atualizado
+ */
 router.patch(
   '/users/:id/role',
   validate({ body: setRoleSchema }),
@@ -69,6 +130,18 @@ router.patch(
   }),
 );
 
+/**
+ * @openapi
+ * /api/v1/admin/users/{id}/approval:
+ *   patch:
+ *     tags: [Admin]
+ *     summary: Aprovar ou bloquear usuário
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Aprovação atualizada
+ */
 router.patch(
   '/users/:id/approval',
   validate({ body: setApprovalSchema }),

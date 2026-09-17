@@ -26,6 +26,7 @@ export function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [acceptedLegal, setAcceptedLegal] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -110,7 +111,15 @@ export function RegisterPage() {
           placeholder="Repita a senha"
         />
 
-        <Button type="submit" fullWidth loading={isSubmitting}>
+        <label className={styles.legalConsent}>
+          <input type="checkbox" checked={acceptedLegal} onChange={(event) => setAcceptedLegal(event.target.checked)} />
+          <span>
+            Li e concordo com os <Link to="/termos" className={styles.inlineLink}>Termos de Uso</Link> e a{' '}
+            <Link to="/privacidade" className={styles.inlineLink}>Política de Privacidade</Link>.
+          </span>
+        </label>
+
+        <Button type="submit" fullWidth loading={isSubmitting} disabled={!acceptedLegal}>
           Criar conta grátis
         </Button>
       </form>

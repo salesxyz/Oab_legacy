@@ -5,6 +5,7 @@ import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { AppLayout } from './layouts/aluno/AppLayout';
 
 import { LandingPage } from './pages/public/LandingPage';
+import { LegalPage } from './pages/public/LegalPage';
 import { LoginPage } from './pages/auth/LoginPage';
 import { RegisterPage } from './pages/auth/RegisterPage';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
@@ -39,6 +40,8 @@ export default function App() {
         <AuthProvider>
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/termos" element={<LegalPage document="terms" />} />
+            <Route path="/privacidade" element={<LegalPage document="privacy" />} />
 
             <Route path="/entrar" element={<LoginPage />} />
             <Route path="/cadastro" element={<RegisterPage />} />

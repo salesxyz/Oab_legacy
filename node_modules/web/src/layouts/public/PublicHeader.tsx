@@ -27,8 +27,8 @@ export function PublicHeader() {
   return (
     <header className={styles.header}>
       <Container className={styles.bar}>
-        <a href="#top" className={styles.logo}>
-          <img src="/oab-legacy-logo.svg" alt="OAB Mentoria" />
+        <a href="/" className={styles.logo}>
+          OAB Mentoria
         </a>
 
         <nav className={styles.nav} aria-label="Navegação principal">

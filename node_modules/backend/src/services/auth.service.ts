@@ -54,7 +54,7 @@ export const authService = {
     return { user: toPublicUser(user), ...tokens };
   },
 
-  async login(input: { email: string; password: string }) {
+  async login(input: { email: string; password: string; remember?: boolean }) {
     const user = await userRepository.findByEmail(input.email);
 
     // Mensagem idêntica para "usuário não existe" e "senha incorreta": evita

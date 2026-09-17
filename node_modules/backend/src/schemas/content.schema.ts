@@ -4,6 +4,7 @@ export const createCourseSchema = z.object({
   title: z.string().trim().min(2).max(200),
   description: z.string().trim().max(2000).optional(),
   imageUrl: z.string().url().optional(),
+  phase: z.enum(['OBJETIVA', 'PRATICO_PROFISSIONAL']).default('OBJETIVA'),
   order: z.number().int().min(0).optional(),
   status: z.enum(['RASCUNHO', 'PUBLICADO']).optional(),
 });

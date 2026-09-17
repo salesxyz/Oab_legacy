@@ -19,6 +19,7 @@
 
   --color-background: #f3f4f6;
   --color-surface: #ffffff;
+  --color-surface-muted: #eef1f4;
   --color-surface-sunken: #eceef1;
 
   --color-text: #1f2937;
@@ -52,6 +53,7 @@
   --leading-tight: 1.15;
   --leading-snug: 1.35;
   --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
 
   --weight-regular: 400;
   --weight-medium: 500;

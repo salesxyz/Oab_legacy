@@ -8,6 +8,7 @@ export const courses = pgTable('courses', {
   title: varchar('title', { length: 200 }).notNull(),
   description: text('description'),
   imageUrl: text('image_url'),
+  phase: varchar('phase', { length: 20 }).notNull().default('OBJETIVA'),
   status: contentStatusEnum('status').notNull().default('RASCUNHO'),
   order: integer('order').notNull().default(0),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),

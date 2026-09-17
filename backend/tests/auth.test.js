@@ -11,13 +11,16 @@ describe('Auth', () => {
         await client_1.pool.end();
     });
     const user = { name: 'Teste Jest', email: 'jest.auth@teste.com', password: 'SenhaForte1' };
-    it('registra um novo usuário e retorna tokens', async () => {
+    it('registra um novo usuário e emite refresh token em cookie HttpOnly', async () => {
         const res = await (0, supertest_1.default)(app_1.app).post('/auth/register').send(user);
         expect(res.status).toBe(201);
         expect(res.body.user.email).toBe(user.email);
         expect(res.body.user.role).toBe('ALUNO');
         expect(res.body.accessToken).toBeDefined();
-        expect(res.body.refreshToken).toBeDefined();
+        expect(res.body.refreshToken).toBeUndefined();
+        expect(res.headers['set-cookie'].join(';')).toMatch(/oab_mentoria_refresh=/);
+        expect(res.headers['set-cookie'].join(';')).toMatch(/HttpOnly/);
+        expect(res.headers['set-cookie'].join(';')).toMatch(/SameSite=Strict/);
     });
     it('não permite cadastro duplicado com o mesmo email', async () => {
         const res = await (0, supertest_1.default)(app_1.app).post('/auth/register').send(user);
@@ -49,13 +52,14 @@ describe('Auth', () => {
         expect(res.body.email).toBe(user.email);
     });
     it('rotaciona o refresh token e invalida o antigo', async () => {
-        const login = await (0, supertest_1.default)(app_1.app).post('/auth/login').send({ email: user.email, password: user.password });
-        const oldRefresh = login.body.refreshToken;
-        const refreshRes = await (0, supertest_1.default)(app_1.app).post('/auth/refresh').send({ refreshToken: oldRefresh });
+        const agent = (0, supertest_1.default).agent(app_1.app);
+        const login = await agent.post('/auth/login').send({ email: user.email, password: user.password, remember: true });
+        const oldRefreshCookie = login.headers['set-cookie'].find((cookie) => cookie.startsWith('oab_mentoria_refresh=')).split(';')[0];
+        const refreshRes = await agent.post('/auth/refresh');
         expect(refreshRes.status).toBe(200);
-        expect(refreshRes.body.refreshToken).not.toBe(oldRefresh);
+        expect(refreshRes.body.refreshToken).toBeUndefined();
         // O token antigo não deve mais funcionar (rotação com revogação).
-        const reuseRes = await (0, supertest_1.default)(app_1.app).post('/auth/refresh').send({ refreshToken: oldRefresh });
+        const reuseRes = await (0, supertest_1.default)(app_1.app).post('/auth/refresh').set('Cookie', oldRefreshCookie);
         expect(reuseRes.status).toBe(401);
     });
     it('fluxo de recuperação de senha responde de forma genérica mesmo para email inexistente', async () => {

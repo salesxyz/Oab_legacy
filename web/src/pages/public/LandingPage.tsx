@@ -3,6 +3,7 @@ import { PublicFooter } from '../../layouts/public/PublicFooter';
 import { Hero } from './sections/Hero';
 import { Features } from './sections/Features';
 import { HowItWorks } from './sections/HowItWorks';
+import { ExamJourney } from './sections/ExamJourney';
 import { Disciplines } from './sections/Disciplines';
 import { Plans } from './sections/Plans';
 import { Faq } from './sections/Faq';
@@ -19,6 +20,7 @@ export function LandingPage() {
         <Hero />
         <Features />
         <HowItWorks />
+        <ExamJourney />
         <Disciplines />
         <Plans />
         <Faq />
