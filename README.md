@@ -1,5 +1,6 @@
 # OAB Mentoria
 
+<<<<<<< HEAD
 ## Plataforma digital para preparação para a OAB
 
 OAB Mentoria é uma plataforma educacional criada para acompanhar o aluno em toda a jornada de preparação para o Exame da Ordem: organização dos estudos, prática por questões, simulados, acompanhamento de desempenho e evolução contínua.
@@ -32,6 +33,13 @@ O projeto demonstra a construção de uma aplicação full stack com:
 - estrutura preparada para deploy em ambiente de produção.
 
 ## Arquitetura do produto
+=======
+Plataforma de preparação para o exame da OAB, formada por uma API em Node.js/Express, banco PostgreSQL e aplicação web em React. O projeto é organizado como um monorepo npm com dois workspaces: `backend` e `web`.
+
+A plataforma oferece autenticação, cursos, conteúdos, questões, simulados, progresso, gamificação, ranking, perfil do aluno, recursos administrativos e área do professor/mentor.
+
+## Visão geral
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 
 ```text
 OAB Mentoria
@@ -64,7 +72,11 @@ OAB Mentoria
 
 O PostgreSQL precisa estar acessível pela `DATABASE_URL`. Em uma instalação local, também é útil ter os comandos `createdb` e `psql` disponíveis no `PATH`, pois o script de setup pode criar os bancos automaticamente.
 
+<<<<<<< HEAD
 ## Ambiente de desenvolvimento
+=======
+## Instalação rápida
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 
 Na raiz do projeto:
 
@@ -91,11 +103,25 @@ Depois disso:
 
 Se o PostgreSQL estiver em outro computador, container ou serviço gerenciado, crie os bancos manualmente e ajuste `backend/.env` antes de executar as migrations.
 
+<<<<<<< HEAD
 ## Dados de demonstração
 
 O ambiente de desenvolvimento possui um seed configurável para criar dados de teste, incluindo usuários com diferentes perfis de acesso, cursos, questões e simulados.
 
 As credenciais não são publicadas neste documento. Consulte os arquivos de ambiente locais e a política interna de acesso ao projeto. Nenhuma credencial de desenvolvimento deve ser reutilizada em staging ou produção.
+=======
+## Primeiro acesso
+
+O seed cria usuários de desenvolvimento. As credenciais padrão são:
+
+| Perfil | Email | Senha |
+|---|---|---|
+| Aluno | `teste@exemplo.com` | `SenhaTeste123!` |
+| Administrador | `admin@exemplo.com` | `AdminTeste123!` |
+| Professor/mentor | `professor@exemplo.com` | `ProfessorTeste123!` |
+
+Esses valores podem ser alterados no `backend/.env`. Eles são exclusivos para desenvolvimento e nunca devem ser usados em produção.
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 
 ## Comandos
 
@@ -201,7 +227,11 @@ Para executar os testes, crie `backend/.env.test` a partir de `backend/.env.test
 
 - Cadastro, login, logout e logout de todas as sessões
 - Access token JWT em memória no frontend
+<<<<<<< HEAD
 - Refresh token opaco em cookie `HttpOnly`, com `Secure` em produção, `SameSite=Strict`, rotação e revogação no backend
+=======
+- Refresh token com rotação e revogação no backend
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 - Recuperação e troca de senha
 - Código de recuperação com expiração e limite de tentativas
 - Proteção contra enumeração de usuários
@@ -228,7 +258,11 @@ Para executar os testes, crie `backend/.env.test` a partir de `backend/.env.test
 - Gestão de aulas, questões e simulados no frontend
 - RBAC aplicado no backend para proteger operações administrativas
 
+<<<<<<< HEAD
 A área de professor possui endpoints próprios para visão geral pedagógica, listagem de alunos, detalhe individual e desempenho por disciplina/período. A autoria de cursos, conteúdos, questões e simulados reutiliza os endpoints de conteúdo protegidos por `ADMIN` ou `MENTOR`.
+=======
+A área de professor possui atualmente o endpoint `GET /mentor/students`. Novos fluxos específicos de mentor podem ser ampliados conforme os endpoints de negócio forem implementados.
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 
 ## Rotas da aplicação web
 
@@ -281,7 +315,11 @@ A proteção visual dessas rotas não substitui autorização: as permissões re
 A API está disponível com prefixo versionado:
 
 ```text
+<<<<<<< HEAD
     http://localhost:3333/api/v1
+=======
+http://localhost:3333/api/v1
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 ```
 
 Também existe um alias compatível sem prefixo de versão, por exemplo `POST /auth/login`.
@@ -313,10 +351,14 @@ GET    /ranking
 
 GET    /admin/dashboard            GET    /admin/users
 PATCH  /admin/users/:id/status     PATCH  /admin/users/:id/role
+<<<<<<< HEAD
 GET    /mentor/dashboard           GET    /mentor/students
 GET    /mentor/students/:id        GET    /mentor/students/:id/performance
 GET    /mentor/students/:id/answers
 GET    /mentor/students/:id/simulations
+=======
+GET    /mentor/students
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 
 GET    /health                     GET    /docs
 ```
@@ -365,12 +407,17 @@ web/src/
 
 - Helmet, CORS configurável, compressão e rate limiting
 - Senhas armazenadas com bcrypt
+<<<<<<< HEAD
 - Refresh tokens armazenados como hash no banco, emitidos somente em cookie `HttpOnly`, com rotação e revogação
+=======
+- Refresh tokens armazenados como hash, com rotação e revogação
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 - Validação de entradas com Zod
 - RBAC no backend para papéis `STUDENT`, `ADMIN` e `MENTOR`
 - Erros sem stack trace ou detalhes internos para o cliente
 - Códigos de recuperação com hash, expiração e limite de tentativas
 - Access token mantido apenas em memória no frontend
+<<<<<<< HEAD
 - O frontend nunca lê ou persiste o refresh token; o navegador o envia automaticamente em requisições com `credentials: include`
 
 O cookie de refresh usa duração de sessão quando “Lembrar acesso” está desmarcado e duração de 30 dias quando está marcado. Em produção, frontend e API devem estar em contexto compatível com `SameSite=Strict` e usar HTTPS.
@@ -378,6 +425,15 @@ O cookie de refresh usa duração de sessão quando “Lembrar acesso” está d
 ## Testes e validação
 
 A suíte do backend é de integração: usa Jest, Supertest e um PostgreSQL separado. Ela cobre autenticação, refresh e revogação de tokens, recuperação de senha, RBAC, conteúdos, questões, simulados, endpoints pedagógicos do mentor e tratamento de erros.
+=======
+- Refresh token persistido no storage do navegador por necessidade da implementação atual
+
+A persistência do refresh token acessível por JavaScript é uma concessão conhecida. Para um endurecimento de produção, o backend deve migrar para cookie `httpOnly`, `Secure` e `SameSite=Strict`.
+
+## Testes e validação
+
+A suíte do backend é de integração: usa Jest, Supertest e um PostgreSQL separado. Ela cobre autenticação, refresh e revogação de tokens, recuperação de senha, RBAC, conteúdos, questões, simulados e tratamento de erros.
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 
 Comandos recomendados antes de enviar alterações:
 
@@ -385,11 +441,15 @@ Comandos recomendados antes de enviar alterações:
 npm run build
 npm test
 npm run lint --workspace=web
+<<<<<<< HEAD
 npm run test:visual --workspace=web
+=======
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 ```
 
 Para uma validação manual completa, inicie o backend e o frontend com `npm run dev`, acesse a aplicação e verifique os fluxos de login, cursos, questões e simulados. O Swagger pode ser usado para inspecionar e exercitar diretamente a API.
 
+<<<<<<< HEAD
 ### Validação visual no CI
 
 O workflow `.github/workflows/visual.yml` executa automaticamente em pushes para `main` e pull requests. Ele instala o Chromium do Playwright, compila o frontend, inicia o build com `vite preview` e compara snapshots de:
@@ -404,6 +464,8 @@ Relatórios HTML, screenshots, traces e vídeos de falhas são publicados como a
 npm run test:visual --workspace=web -- --update-snapshots
 ```
 
+=======
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 ## Produção
 
 O build completo é gerado com:
@@ -431,6 +493,7 @@ Antes de publicar:
 
 ## Próximos passos conhecidos
 
+<<<<<<< HEAD
 - Revisar os dados do controlador, do encarregado e do canal de privacidade nas páginas legais antes da publicação.
 
 ## Uso interno e operação
@@ -443,3 +506,14 @@ Antes de publicar:
 ## Contato comercial
 
 Para demonstrações, propostas, implantação ou informações sobre a solução, utilize o canal comercial oficial do projeto. Detalhes de contato, credenciais e configurações de ambientes não são mantidos neste repositório.
+=======
+- Completar e ampliar os endpoints específicos da área de professor/mentor.
+- Integrar assinaturas e pagamentos reais.
+- Migrar refresh token para cookie `httpOnly`.
+- Adicionar páginas de Termos de Uso e Política de Privacidade (LGPD).
+- Configurar validação visual automatizada com navegador headless no pipeline de CI.
+
+## Licença
+
+O projeto ainda não define uma licença de distribuição pública no repositório.
+>>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
