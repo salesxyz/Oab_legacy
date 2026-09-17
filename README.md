@@ -1,6 +1,5 @@
 # OAB Mentoria
 
-<<<<<<< HEAD
 ## Plataforma digital para preparação para a OAB
 
 OAB Mentoria é uma plataforma educacional criada para acompanhar o aluno em toda a jornada de preparação para o Exame da Ordem: organização dos estudos, prática por questões, simulados, acompanhamento de desempenho e evolução contínua.
@@ -227,7 +226,7 @@ Para executar os testes, crie `backend/.env.test` a partir de `backend/.env.test
 
 - Cadastro, login, logout e logout de todas as sessões
 - Access token JWT em memória no frontend
-<<<<<<< HEAD
+
 - Refresh token opaco em cookie `HttpOnly`, com `Secure` em produção, `SameSite=Strict`, rotação e revogação no backend
 =======
 - Refresh token com rotação e revogação no backend
@@ -258,11 +257,11 @@ Para executar os testes, crie `backend/.env.test` a partir de `backend/.env.test
 - Gestão de aulas, questões e simulados no frontend
 - RBAC aplicado no backend para proteger operações administrativas
 
-<<<<<<< HEAD
+
 A área de professor possui endpoints próprios para visão geral pedagógica, listagem de alunos, detalhe individual e desempenho por disciplina/período. A autoria de cursos, conteúdos, questões e simulados reutiliza os endpoints de conteúdo protegidos por `ADMIN` ou `MENTOR`.
 =======
 A área de professor possui atualmente o endpoint `GET /mentor/students`. Novos fluxos específicos de mentor podem ser ampliados conforme os endpoints de negócio forem implementados.
->>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
+
 
 ## Rotas da aplicação web
 
@@ -407,17 +406,15 @@ web/src/
 
 - Helmet, CORS configurável, compressão e rate limiting
 - Senhas armazenadas com bcrypt
-<<<<<<< HEAD
+
 - Refresh tokens armazenados como hash no banco, emitidos somente em cookie `HttpOnly`, com rotação e revogação
 =======
 - Refresh tokens armazenados como hash, com rotação e revogação
->>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 - Validação de entradas com Zod
 - RBAC no backend para papéis `STUDENT`, `ADMIN` e `MENTOR`
 - Erros sem stack trace ou detalhes internos para o cliente
 - Códigos de recuperação com hash, expiração e limite de tentativas
 - Access token mantido apenas em memória no frontend
-<<<<<<< HEAD
 - O frontend nunca lê ou persiste o refresh token; o navegador o envia automaticamente em requisições com `credentials: include`
 
 O cookie de refresh usa duração de sessão quando “Lembrar acesso” está desmarcado e duração de 30 dias quando está marcado. Em produção, frontend e API devem estar em contexto compatível com `SameSite=Strict` e usar HTTPS.
@@ -444,7 +441,6 @@ npm run lint --workspace=web
 <<<<<<< HEAD
 npm run test:visual --workspace=web
 =======
->>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
 ```
 
 Para uma validação manual completa, inicie o backend e o frontend com `npm run dev`, acesse a aplicação e verifique os fluxos de login, cursos, questões e simulados. O Swagger pode ser usado para inspecionar e exercitar diretamente a API.
@@ -493,7 +489,6 @@ Antes de publicar:
 
 ## Próximos passos conhecidos
 
-<<<<<<< HEAD
 - Revisar os dados do controlador, do encarregado e do canal de privacidade nas páginas legais antes da publicação.
 
 ## Uso interno e operação
@@ -516,4 +511,4 @@ Para demonstrações, propostas, implantação ou informações sobre a soluçã
 ## Licença
 
 O projeto ainda não define uma licença de distribuição pública no repositório.
->>>>>>> 67f607708ba738f9adee6119b6f169da9cb04592
+
