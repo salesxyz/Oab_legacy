@@ -1,0 +1,3 @@
+ALTER TABLE "courses" ADD COLUMN IF NOT EXISTS "image_url" text;
+ALTER TABLE "courses" ADD COLUMN IF NOT EXISTS "status" "content_status" DEFAULT 'RASCUNHO' NOT NULL;
+ALTER TABLE "courses" ADD COLUMN IF NOT EXISTS "phase" varchar(20) DEFAULT 'OBJETIVA' NOT NULL;

@@ -46,24 +46,6 @@ a {
   border-radius: var(--radius-sm);
 }
 
-/* Link "pular para o conteúdo" — só aparece quando recebe foco via teclado. */
-.skip-link {
-  position: absolute;
-  left: var(--space-4);
-  top: -48px;
-  background: var(--color-primary);
-  color: var(--color-text-on-primary);
-  padding: var(--space-3) var(--space-5);
-  border-radius: var(--radius-sm);
-  font-weight: var(--weight-semibold);
-  z-index: 1000;
-  transition: top var(--transition-fast);
-}
-
-.skip-link:focus {
-  top: var(--space-4);
-}
-
 .visually-hidden {
   position: absolute;
   width: 1px;

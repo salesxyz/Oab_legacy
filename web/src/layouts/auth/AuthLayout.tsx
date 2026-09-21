@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
 import { LearningPathIllustration } from '../../components/illustrations/LearningPathIllustration';
+import { BrandMark } from '../../components/ui/BrandMark';
 import styles from './AuthLayout.module.css';
 
 interface AuthLayoutProps {
@@ -13,9 +13,7 @@ export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
   return (
     <div className={styles.page}>
       <aside className={styles.brandPanel}>
-        <Link to="/" className={styles.logo}>
-          OAB Mentoria
-        </Link>
+        <BrandMark className={styles.logo} tone="light" aria-label="Voltar ao início" />
 
         <div className={styles.illustration}>
           <LearningPathIllustration />
@@ -30,9 +28,7 @@ export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
       </aside>
 
       <main className={styles.formPanel}>
-        <Link to="/" className={styles.mobileLogo}>
-          OAB Mentoria
-        </Link>
+        <BrandMark className={styles.mobileLogo} aria-label="Voltar ao início" />
 
         <div className={styles.formCard}>
           <h1 className={styles.title}>{title}</h1>

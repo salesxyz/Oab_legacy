@@ -15,14 +15,12 @@
 }
 
 .steps {
-  display: grid;
-  gap: var(--space-8);
-  counter-reset: step;
+  max-width: 820px;
+  margin-inline: auto;
 }
 
 .step {
-  display: flex;
-  gap: var(--space-5);
+  align-items: start;
 }
 
 .stepNumber {
@@ -30,8 +28,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1.5px solid var(--color-secondary);
-  color: var(--color-secondary);
+  border: 1.5px solid var(--color-accent);
+  color: var(--color-primary);
+  background: var(--color-accent);
   display: grid;
   place-items: center;
   font-family: var(--font-display);
@@ -51,9 +50,3 @@
   max-width: 46ch;
 }
 
-@media (min-width: 720px) {
-  .steps {
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: var(--space-10);
-  }
-}

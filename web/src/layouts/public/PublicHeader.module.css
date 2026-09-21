@@ -4,6 +4,9 @@
   z-index: 100;
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
+  transform: translate3d(0, calc(var(--header-offset, 0px) * -1), 0);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
 .bar {
@@ -22,31 +25,205 @@
 
 .logo img {
   display: block;
-  width: 150px;
-  height: 58px;
+  height: 48px;
+  width: auto;
   object-fit: contain;
 }
 
 .nav {
   display: none;
   align-items: center;
-  gap: var(--space-8);
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--color-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
 }
 
 .navLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 var(--space-4);
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
-  color: var(--color-text);
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  border-radius: var(--radius-full);
+  transition: color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown .navLink {
+  gap: var(--space-2);
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.navLink svg {
+  transition: transform var(--transition-fast);
 }
 
 .navLink:hover {
-  color: var(--color-secondary);
+  color: var(--color-primary);
+  background: var(--color-surface);
+  transform: translateY(-1px);
+}
+
+.navLink::after {
+  position: absolute;
+  right: var(--space-4);
+  bottom: 4px;
+  left: var(--space-4);
+  height: 2px;
+  content: '';
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  transform: scaleX(0);
+  transition: transform var(--transition-fast);
+}
+
+.navLink:hover::after,
+.navLink:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.dropdownPanel {
+  position: absolute;
+  top: calc(100% + var(--space-3));
+  left: 50%;
+  display: grid;
+  min-width: 250px;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 2px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  transform: translateX(-50%);
+  animation: dropdown-in 160ms ease-out both;
+}
+
+.dropdownLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+
+.dropdownLink span {
+  color: var(--color-accent);
+  opacity: 0;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.dropdownLink:hover,
+.dropdownLink:focus-visible {
+  color: var(--color-primary);
+  background: var(--color-surface-muted);
+}
+
+.dropdownLink:hover span,
+.dropdownLink:focus-visible span {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translate(-50%, -6px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
 }
 
 .actions {
   display: none;
   align-items: center;
   gap: var(--space-3);
+  white-space: nowrap;
+}
+
+.profile {
+  position: relative;
+}
+
+.profileButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.profilePhoto,
+.profileFallback {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profileFallback {
+  color: var(--color-surface);
+  background: var(--color-primary);
+  border: 2px solid var(--color-accent);
+  font-size: var(--text-xs);
+}
+
+.profileMenu {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  z-index: 10;
+  display: grid;
+  width: 240px;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+}
+
+.profileSummary {
+  display: grid;
+  gap: 2px;
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.profileSummary span {
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logoutButton {
+  width: 100%;
+  padding: var(--space-2);
+  color: var(--color-danger);
+  text-align: left;
+  font-size: var(--text-sm);
+  border-radius: 6px;
+}
+
+.logoutButton:hover {
+  background: color-mix(in srgb, var(--color-danger) 8%, transparent);
 }
 
 .menuButton {
@@ -68,6 +245,12 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .header {
+    transition: transform 350ms ease-out;
+  }
+}
+
 /* ---------- Painel mobile ---------- */
 
 .mobilePanel {
@@ -86,15 +269,61 @@
 .mobileNav {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-2);
+}
+
+.mobileSection {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mobileSectionTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 54px;
+  padding: var(--space-3) var(--space-2);
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  text-align: left;
+}
+
+.mobileSectionContent {
+  display: grid;
+  gap: var(--space-2);
+  padding: 0 0 var(--space-3);
 }
 
 .mobileNavLink {
-  padding: var(--space-4) var(--space-2);
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: var(--space-3) var(--space-4);
   font-size: var(--text-lg);
   font-weight: var(--weight-semibold);
   color: var(--color-primary);
-  border-bottom: 1px solid var(--color-border);
+  text-decoration: none;
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdownPanel,
+  .navLink svg,
+  .dropdownLink span {
+    animation: none;
+    transition: none;
+  }
+}
+
+.mobileNavLink:hover,
+.mobileNavLink:focus-visible {
+  background: var(--color-surface);
+  border-color: var(--color-secondary);
+  transform: translateX(3px);
 }
 
 .mobileActions {

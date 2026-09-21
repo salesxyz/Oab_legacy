@@ -1,6 +1,7 @@
 import { NavLink, Outlet, Navigate, useLocation } from 'react-router-dom';
 import { BookIcon, ClipboardIcon, HomeIcon, LogoutIcon, UserIcon } from '../../components/ui/icons';
 import { useAuth } from '../../contexts/AuthContext';
+import { BrandMark } from '../../components/ui/BrandMark';
 import styles from './BackofficeLayout.module.css';
 
 const adminNav = [{ to: '/admin', label: 'Visão geral', icon: HomeIcon, end: true }, { to: '/admin/usuarios', label: 'Usuários', icon: UserIcon }, { to: '/admin/perfil', label: 'Perfil', icon: UserIcon }];
@@ -19,7 +20,7 @@ export function BackofficeLayout() {
   return (
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
-        <div className={styles.brand}><img src="/favicon.svg" alt="" aria-hidden="true" /><span>OAB Mentoria</span></div>
+        <BrandMark className={styles.brand} tone="light" aria-label="Voltar ao início" />
         <div className={styles.portalTag}>{portalName}</div>
         <nav className={styles.nav} aria-label="Navegação do painel">
           {navItems.map(({ to, label, icon: Icon, end }) => <NavLink key={to} to={to} end={end} className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}><Icon />{label}</NavLink>)}
@@ -28,7 +29,7 @@ export function BackofficeLayout() {
       </aside>
       <div className={styles.main}>
         <header className={styles.topbar}>
-          <div><p className={styles.mobileBrand}>OAB Mentoria</p><p className={styles.topbarTitle}>{portalName}</p></div>
+          <div><BrandMark className={styles.mobileBrand} aria-label="Voltar ao início" /><p className={styles.topbarTitle}>{portalName}</p></div>
           <div className={styles.userChip}><span className={styles.avatar}>{initials}</span><span className={styles.userName}>{user.name}</span></div>
         </header>
         <main className={styles.content}><Outlet /></main>

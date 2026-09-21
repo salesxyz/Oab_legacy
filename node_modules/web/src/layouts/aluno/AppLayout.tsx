@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { AwardIcon, BookIcon, ClipboardIcon, ClockIcon, HomeIcon, LogoutIcon, TrophyIcon, UserIcon } from '../../components/ui/icons';
+import { BrandMark } from '../../components/ui/BrandMark';
 import styles from './AppLayout.module.css';
 
 const navItems = [
@@ -25,10 +26,7 @@ export function AppLayout() {
   return (
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
-        <div className={styles.logo}>
-          <img src="/favicon.svg" alt="" aria-hidden="true" />
-          OAB Mentoria
-        </div>
+        <BrandMark className={styles.logo} tone="light" aria-label="Voltar ao início" />
         <nav className={styles.nav} aria-label="Navegação da área do aluno">
           {navItems.map(({ to, label, icon: Icon, end }) => (
             <NavLink
@@ -50,10 +48,7 @@ export function AppLayout() {
 
       <div className={styles.main}>
         <header className={styles.topbar}>
-          <span className={styles.topbarLogo}>
-            <img src="/favicon.svg" alt="" aria-hidden="true" />
-            OAB Mentoria
-          </span>
+          <BrandMark className={styles.topbarLogo} aria-label="Voltar ao início" />
           <span className={styles.avatar} aria-hidden="true">{initials}</span>
         </header>
 

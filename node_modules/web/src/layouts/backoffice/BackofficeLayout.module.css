@@ -1,7 +1,7 @@
 .shell { min-height: 100svh; display: flex; background: #f5f7fa; }
 .sidebar { width: 258px; flex: 0 0 258px; background: var(--color-primary); padding: 28px 18px 22px; display: flex; flex-direction: column; }
-.brand { display: flex; align-items: center; gap: 10px; color: white; font: 800 16px var(--font-display); padding: 0 12px; }
-.brand img { width: 30px; height: 30px; display: block; }
+.brand { display: flex; align-items: center; padding: 0 12px; }
+.brand img { height: 38px; width: auto; display: block; object-fit: contain; }
 .portalTag { margin: 48px 12px 12px; color: #8190aa; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
 .nav { display: grid; gap: 5px; }
 .navLink, .logout { display: flex; align-items: center; gap: 12px; border-radius: 8px; padding: 12px; color: #aeb9cb; font-size: 14px; font-weight: 600; transition: background var(--transition-fast), color var(--transition-fast); }
@@ -19,7 +19,8 @@
 @media (max-width: 899px) {
   .sidebar { display: none; }
   .topbar { height: 68px; padding: 0 18px; }
-  .mobileBrand { display: block; margin: 0 0 1px; color: var(--color-primary); font: 800 14px var(--font-display); }
+  .mobileBrand { display: block; margin: 0 0 1px; }
+  .mobileBrand img { height: 28px; width: auto; }
   .topbarTitle { font-size: 11px; }
   .userName { display: none; }
   .content { padding: 26px 16px 92px; }

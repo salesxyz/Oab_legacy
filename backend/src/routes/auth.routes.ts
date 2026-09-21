@@ -14,6 +14,9 @@ import {
 
 const router = Router();
 
+router.get('/google', authController.googleStart);
+router.get('/google/callback', authController.googleCallback);
+
 /**
  * @openapi
  * /api/v1/auth/register:

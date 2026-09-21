@@ -12,8 +12,17 @@ import { refreshTokenRepository } from '../repositories/refreshToken.repository'
 import { passwordResetRepository } from '../repositories/passwordReset.repository';
 import { emailService } from './email.service';
 import { logger } from '../config/logger';
+import { OAuth2Client } from 'google-auth-library';
+import { randomBytes } from 'node:crypto';
 
 const LOGIN_LOCK_MINUTES = 15;
+
+function googleClient() {
+  if (!env.GOOGLE_CLIENT_ID || !env.GOOGLE_CLIENT_SECRET) {
+    throw ApiError.serviceUnavailable('Login com Google não está configurado.', 'GOOGLE_AUTH_NOT_CONFIGURED');
+  }
+  return new OAuth2Client(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, env.GOOGLE_REDIRECT_URI || `${env.APP_URL}/auth/google/callback`);
+}
 
 function toPublicUser(user: { id: string; name: string; email: string; role: 'ALUNO' | 'ADMIN' | 'MENTOR'; status: string; photoUrl: string | null; subscriptionPlan?: string | null; accessExpiresAt?: Date | null; approved?: boolean; approvedAt?: Date | null }) {
   return {
@@ -80,6 +89,45 @@ export const authService = {
       throw genericError();
     }
 
+    await userRepository.updateLastLogin(user.id);
+    const tokens = await issueTokenPair(user);
+    return { user: toPublicUser(user), ...tokens };
+  },
+
+  googleAuthorizationUrl(state: string) {
+    return googleClient().generateAuthUrl({
+      access_type: 'offline',
+      scope: ['openid', 'email', 'profile'],
+      state,
+      prompt: 'select_account',
+    });
+  },
+
+  async loginWithGoogle(code: string) {
+    const client = googleClient();
+    const { tokens: googleTokens } = await client.getToken(code);
+    if (!googleTokens.id_token) throw ApiError.unauthorized('Não foi possível validar a conta Google.', 'GOOGLE_AUTH_FAILED');
+
+    const ticket = await client.verifyIdToken({ idToken: googleTokens.id_token, audience: env.GOOGLE_CLIENT_ID });
+    const payload = ticket.getPayload();
+    if (!payload?.email || payload.email_verified !== true) {
+      throw ApiError.unauthorized('A conta Google não possui um email verificado.', 'GOOGLE_EMAIL_NOT_VERIFIED');
+    }
+
+    let user = await userRepository.findByEmail(payload.email);
+    if (!user) {
+      user = await userRepository.create({
+        name: payload.name?.trim() || payload.email.split('@')[0],
+        email: payload.email,
+        passwordHash: await hashPassword(randomBytes(32).toString('hex')),
+      });
+    } else if (user.status === 'INATIVO') {
+      throw ApiError.forbidden('Esta conta está desativada. Entre em contato com o suporte.', 'ACCOUNT_INACTIVE');
+    }
+
+    if (payload.picture && user.photoUrl !== payload.picture) {
+      user = (await userRepository.updateProfileBasics(user.id, { photoUrl: payload.picture })) ?? user;
+    }
     await userRepository.updateLastLogin(user.id);
     const tokens = await issueTokenPair(user);
     return { user: toPublicUser(user), ...tokens };

@@ -11,6 +11,8 @@
 
 .copy {
   max-width: 46ch;
+  padding-left: var(--space-5);
+  border-left: 3px solid var(--color-accent);
 }
 
 .headline {
@@ -45,6 +47,15 @@
   font-size: var(--text-2xl);
   color: var(--color-primary);
   line-height: 1;
+}
+
+.statValue::after {
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-top: var(--space-2);
+  content: '';
+  background: var(--color-accent);
 }
 
 .statLabel {

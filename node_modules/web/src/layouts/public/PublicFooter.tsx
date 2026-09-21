@@ -1,4 +1,5 @@
 import { Container } from '../../components/ui/Container';
+import { BrandMark } from '../../components/ui/BrandMark';
 import { footerLinks } from '../../data/landingContent';
 import styles from './PublicFooter.module.css';
 
@@ -10,9 +11,7 @@ export function PublicFooter() {
       <Container>
         <div className={styles.top}>
           <div className={styles.brand}>
-            <a href="/" className={styles.logo}>
-              OAB Mentoria
-            </a>
+            <BrandMark className={styles.logo} tone="light" aria-label="Voltar ao início" />
             <p className={styles.tagline}>
               Preparação para as duas fases do Exame de Ordem: teoria, prática profissional, questões comentadas e acompanhamento até a aprovação.
             </p>
@@ -47,7 +46,7 @@ export function PublicFooter() {
         </div>
 
         <div className={styles.bottom}>
-          <span>© {year} OAB Mentoria. Todos os direitos reservados.</span>
+          <span>© {year} OAB Legacy. Todos os direitos reservados.</span>
           <span>Conteúdo de apoio ao estudo — não substitui a leitura da lei e da doutrina.</span>
         </div>
       </Container>

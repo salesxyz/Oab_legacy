@@ -14,20 +14,13 @@
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  font-family: var(--font-display);
-  font-weight: var(--weight-extrabold);
-  font-size: var(--text-lg);
-  color: var(--color-text-on-primary);
 }
 
 .logo img {
   display: block;
-  width: 190px;
   height: 80px;
+  width: auto;
   object-fit: contain;
-  background: var(--color-surface);
-  border-radius: var(--radius-sm);
 }
 
 .brandMessage {
@@ -61,21 +54,29 @@
 .mobileLogo {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  font-family: var(--font-display);
-  font-weight: var(--weight-extrabold);
-  font-size: var(--text-lg);
-  color: var(--color-primary);
+  justify-content: center;
   margin-bottom: var(--space-10);
+  padding-bottom: var(--space-6);
+  position: relative;
+}
+
+.mobileLogo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 3px;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
 }
 
 .mobileLogo img {
   display: block;
-  width: 180px;
   height: 72px;
+  width: auto;
   object-fit: contain;
-  background: var(--color-surface);
-  border-radius: var(--radius-sm);
 }
 
 .formCard {
@@ -109,5 +110,9 @@
 
   .formPanel {
     padding: var(--space-8);
+  }
+
+  .logo img {
+    height: 96px;
   }
 }

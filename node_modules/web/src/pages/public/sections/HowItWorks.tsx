@@ -1,4 +1,5 @@
 import { Container } from '../../../components/ui/Container';
+import { ScrollStack, ScrollStackItem } from '../../../components/ui/ScrollStack';
 import { howItWorks } from '../../../data/landingContent';
 import styles from './HowItWorks.module.css';
 
@@ -11,9 +12,9 @@ export function HowItWorks() {
           <h2>Um método que acompanha a sua evolução nas duas fases.</h2>
         </div>
 
-        <ol className={styles.steps} role="list">
+        <ScrollStack className={styles.steps} useWindowScroll itemDistance={100} itemStackDistance={30} stackPosition="20%" scaleEndPosition="10%" baseScale={0.85}>
           {howItWorks.map((step, index) => (
-            <li className={styles.step} key={step.title}>
+            <ScrollStackItem key={step.title} itemClassName={styles.step}>
               <span className={styles.stepNumber} aria-hidden="true">
                 {index + 1}
               </span>
@@ -21,9 +22,9 @@ export function HowItWorks() {
                 <h3 className={styles.stepTitle}>{step.title}</h3>
                 <p className={styles.stepDescription}>{step.description}</p>
               </div>
-            </li>
+            </ScrollStackItem>
           ))}
-        </ol>
+        </ScrollStack>
       </Container>
     </section>
   );

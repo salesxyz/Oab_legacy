@@ -6,6 +6,9 @@ const envSchema = z.object({
   PORT: z.coerce.number().default(3333),
   APP_URL: z.string().default('http://localhost:3333'),
   WEB_URL: z.string().default('http://localhost:5173'),
+  GOOGLE_CLIENT_ID: z.string().optional().default(''),
+  GOOGLE_CLIENT_SECRET: z.string().optional().default(''),
+  GOOGLE_REDIRECT_URI: z.string().optional().default(''),
   VIDEO_STORAGE_DIR: z.string().default('./storage/videos'),
   VIDEO_MAX_SIZE_MB: z.coerce.number().int().positive().default(500),
 

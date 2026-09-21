@@ -1,9 +1,18 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import { Client } from 'pg';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
 module.exports = async () => {
   dotenv.config({ path: path.resolve(__dirname, '../.env.test') });
+
+  const migrationClient = new Client({ connectionString: process.env.DATABASE_URL });
+  await migrationClient.connect();
+  await migrate(drizzle(migrationClient), {
+    migrationsFolder: path.resolve(__dirname, '../drizzle'),
+  });
+  await migrationClient.end();
 
   const client = new Client({ connectionString: process.env.DATABASE_URL });
   await client.connect();

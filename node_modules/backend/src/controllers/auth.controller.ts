@@ -2,10 +2,13 @@ import { Request, Response } from 'express';
 import { asyncHandler } from '../utils/asyncHandler';
 import { authService } from '../services/auth.service';
 import { ApiError } from '../utils/ApiError';
+import { env } from '../config/env';
+import { randomBytes, timingSafeEqual } from 'node:crypto';
 
 export const REFRESH_COOKIE_NAME = 'oab_mentoria_refresh';
 const REFRESH_MODE_COOKIE_NAME = 'oab_mentoria_refresh_mode';
 const REFRESH_COOKIE_MAX_AGE = 30 * 24 * 60 * 60 * 1000;
+const GOOGLE_STATE_COOKIE = 'oab_mentoria_google_state';
 
 function setRefreshCookies(res: Response, refreshToken: string, persistent: boolean) {
   const secure = process.env.NODE_ENV === 'production';
@@ -32,6 +35,38 @@ function withoutRefreshToken<T extends { refreshToken: string }>(result: T) {
 }
 
 export const authController = {
+  googleStart: asyncHandler(async (req: Request, res: Response) => {
+    const state = randomBytes(24).toString('hex');
+    res.cookie(GOOGLE_STATE_COOKIE, state, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 10 * 60 * 1000,
+      path: '/',
+    });
+    return res.redirect(authService.googleAuthorizationUrl(state));
+  }),
+
+  googleCallback: asyncHandler(async (req: Request, res: Response) => {
+    const state = req.query.state;
+    const storedState = req.cookies?.[GOOGLE_STATE_COOKIE];
+    const redirectError = `${env.WEB_URL}/entrar?oauth=error`;
+    res.clearCookie(GOOGLE_STATE_COOKIE, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax', path: '/' });
+
+    if (typeof state !== 'string' || typeof storedState !== 'string' || state.length !== storedState.length || !timingSafeEqual(Buffer.from(state), Buffer.from(storedState))) {
+      return res.redirect(redirectError);
+    }
+    if (typeof req.query.code !== 'string') return res.redirect(redirectError);
+
+    try {
+      const result = await authService.loginWithGoogle(req.query.code);
+      setRefreshCookies(res, result.refreshToken, true);
+      return res.redirect(`${env.WEB_URL}/app`);
+    } catch (error) {
+      return res.redirect(redirectError);
+    }
+  }),
+
   register: asyncHandler(async (req: Request, res: Response) => {
     const result = await authService.register(req.body);
     setRefreshCookies(res, result.refreshToken, false);
