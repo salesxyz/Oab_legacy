@@ -3,6 +3,14 @@
 .header h1 { margin: 0; font-size: var(--text-2xl); }
 .eyebrow, .kicker { margin: 0 0 7px; color: var(--color-secondary); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
 .subtitle { margin: 8px 0 0; color: var(--color-text-muted); font-size: var(--text-sm); }
+.checkoutSuccess, .checkoutCanceled { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; border: 1px solid #bbf7d0; border-radius: var(--radius-lg); padding: 18px 20px; background: #f0fdf4; }
+.checkoutSuccess h2, .checkoutCanceled h2 { margin: 0; color: #166534; font-size: var(--text-lg); }
+.checkoutSuccess p:not(.kicker), .checkoutCanceled p:not(.kicker) { margin: 5px 0 0; color: #4b6352; font-size: 12px; }
+.successIcon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: #dcfce7; color: #15803d; flex-shrink: 0; }
+.confirmedBadge { margin-left: auto; border-radius: 999px; padding: 7px 10px; background: #dcfce7; color: #166534; font-size: 11px; font-weight: 800; white-space: nowrap; }
+.checkoutCanceled { display: block; border-color: #fde68a; background: #fffbeb; }
+.checkoutCanceled h2 { color: #92400e; }
+.checkoutCanceled p:not(.kicker) { color: #78350f; }
 .checkoutGrid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(280px, .75fr); gap: 18px; margin-bottom: 18px; }
 .paymentPanel, .orderSummary { border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; background: var(--color-surface); box-shadow: var(--shadow-sm); }
 .panelHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }

@@ -1,10 +1,67 @@
+html {
+  font-size: 100%;
+}
+
 body {
   background: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-body);
-  font-size: var(--text-base);
+  font-size: calc(1rem * var(--font-scale-factor, 1));
   line-height: var(--leading-normal);
   font-weight: var(--weight-regular);
+}
+
+html[data-high-contrast='true'] {
+  --color-background: #ffffff;
+  --color-surface: #ffffff;
+  --color-text: #111827;
+  --color-text-muted: #374151;
+  --color-border: #374151;
+  --color-primary: #071a32;
+  --color-secondary: #0f4fc7;
+  --color-focus-ring: #0c3bbd;
+}
+
+html[data-high-contrast='true'] body,
+html[data-high-contrast='true'] p,
+html[data-high-contrast='true'] span,
+html[data-high-contrast='true'] li,
+html[data-high-contrast='true'] label,
+html[data-high-contrast='true'] strong,
+html[data-high-contrast='true'] small {
+  color: var(--color-text);
+}
+
+html[data-larger-text='true'] {
+  font-size: 108%;
+}
+
+html[data-larger-text='true'] body,
+html[data-larger-text='true'] button,
+html[data-larger-text='true'] input,
+html[data-larger-text='true'] select,
+html[data-larger-text='true'] textarea,
+html[data-larger-text='true'] .navLabel,
+html[data-larger-text='true'] .bottomNavLabel {
+  font-size: 1rem;
+}
+
+html[data-reduced-motion='true'] {
+  --transition-fast: 0ms;
+  --transition-base: 0ms;
+  --transition-slow: 0ms;
+}
+
+html[data-reduced-motion='true'] *,
+html[data-reduced-motion='true'] *::before,
+html[data-reduced-motion='true'] *::after {
+  animation: none !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition: none !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0ms !important;
 }
 
 h1,
@@ -36,6 +93,26 @@ p {
 
 a {
   color: var(--color-secondary);
+}
+
+.skipLink {
+  position: absolute;
+  left: var(--space-4);
+  top: 0;
+  z-index: 1000;
+  transform: translateY(-120%);
+  padding: 0.75rem 1rem;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  transition: transform var(--transition-fast);
+}
+
+.skipLink:focus {
+  transform: translateY(0);
 }
 
 /* Foco visível é inegociável: nunca remova o outline sem substituir por

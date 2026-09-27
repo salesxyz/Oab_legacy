@@ -23,8 +23,9 @@ export function LegalPage({ document }: { document: LegalDocument }) {
 
   return (
     <>
+      <a href="#conteudo" className="skipLink">Pular para o conteúdo</a>
       <PublicHeader />
-      <main className={styles.page}>
+      <main id="conteudo" className={styles.page}>
         <article className={styles.document}>
           <Link to="/" className={styles.backLink}>
             ← Voltar para a página inicial
@@ -46,10 +47,10 @@ function TermsContent() {
   return (
     <div className={styles.content}>
       <p>
-        Estes Termos de Uso regulam o acesso e a utilização da OAB Mentoria, uma plataforma de apoio à preparação para o Exame de Ordem. Ao criar uma conta ou utilizar a plataforma, você declara que leu e concorda com estes termos.
+        Estes Termos de Uso regulam o acesso e a utilização da OAB Legacy, uma plataforma de apoio à preparação para o Exame de Ordem. Ao criar uma conta ou utilizar a plataforma, você declara que leu e concorda com estes termos.
       </p>
       <Section title="1. Sobre a plataforma">
-        <p>A OAB Mentoria oferece aulas, materiais, questões, simulados, acompanhamento de progresso e recursos de gamificação para fins educacionais.</p>
+        <p>A OAB Legacy oferece aulas, materiais, questões, simulados, acompanhamento de progresso e recursos de gamificação para fins educacionais.</p>
         <p>O conteúdo é material de apoio e não substitui a legislação vigente, a doutrina, a orientação de profissionais habilitados ou os editais oficiais da OAB.</p>
       </Section>
       <Section title="2. Cadastro e conta">
@@ -61,7 +62,7 @@ function TermsContent() {
         <p>Cancelamentos, arrependimento e reembolsos observarão a legislação aplicável e as condições informadas no momento da contratação.</p>
       </Section>
       <Section title="4. Conteúdo e propriedade intelectual">
-        <p>Textos, aulas, marcas, software, layouts e demais elementos da plataforma pertencem à OAB Mentoria ou a seus licenciadores. É proibido copiar, distribuir, revender, extrair ou disponibilizar esse conteúdo sem autorização.</p>
+        <p>Textos, aulas, marcas, software, layouts e demais elementos da plataforma pertencem à OAB Legacy ou a seus licenciadores. É proibido copiar, distribuir, revender, extrair ou disponibilizar esse conteúdo sem autorização.</p>
       </Section>
       <Section title="5. Disponibilidade e responsabilidade">
         <p>Buscamos manter a plataforma disponível e segura, mas podem ocorrer interrupções para manutenção, atualizações ou fatores fora do nosso controle. Não garantimos aprovação no Exame de Ordem, pois o resultado depende também da preparação e do desempenho individual.</p>
@@ -78,14 +79,14 @@ function PrivacyContent() {
   return (
     <div className={styles.content}>
       <p>
-        Esta Política explica como a OAB Mentoria coleta, utiliza, armazena e protege dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).
+        Esta Política explica como a OAB Legacy coleta, utiliza, armazena e protege dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).
       </p>
       <Section title="1. Quem é o controlador">
-        <p>O controlador dos dados é a pessoa jurídica responsável pela operação da OAB Mentoria. Os dados cadastrais e o canal oficial de contato do controlador devem ser preenchidos e mantidos atualizados pelo responsável pelo serviço antes da publicação definitiva.</p>
+        <p>O controlador dos dados é a pessoa jurídica responsável pela operação da OAB Legacy. Os dados cadastrais e o canal oficial de contato do controlador devem ser preenchidos e mantidos atualizados pelo responsável pelo serviço antes da publicação definitiva.</p>
       </Section>
       <Section title="2. Dados coletados">
         <p>Podemos coletar nome, email, credenciais protegidas, dados de perfil, progresso de estudos, respostas, resultados de simulados e registros de uso da plataforma.</p>
-        <p>Dados de pagamento são processados pelo provedor de pagamentos. A OAB Mentoria não armazena o número completo do cartão.</p>
+        <p>Dados de pagamento são processados pelo provedor de pagamentos. A OAB Legacy não armazena o número completo do cartão.</p>
       </Section>
       <Section title="3. Finalidades e bases legais">
         <p>Usamos os dados para criar e administrar sua conta, fornecer os recursos contratados, registrar progresso, personalizar a experiência, processar pagamentos, prevenir fraudes, enviar comunicações relacionadas ao serviço e cumprir obrigações legais.</p>

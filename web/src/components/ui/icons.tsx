@@ -4,6 +4,23 @@ interface IconProps {
 
 const base = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
 
+export function MenuIcon({ size = 18 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" {...base}>
+      <path d="M3 5.5h14M3 10h14M3 14.5h14" />
+    </svg>
+  );
+}
+
+export function AccessibilityIcon({ size = 18 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" {...base}>
+      <circle cx="10" cy="3.5" r="1.5" />
+      <path d="M4 6.5h12M10 6.5v10M7 17l3-4 3 4M7 9l-2 4M13 9l2 4" />
+    </svg>
+  );
+}
+
 export function HomeIcon({ size = 18 }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 20 20" {...base}>

@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 import { authApi } from '../services/authApi';
+import { profileApi } from '../services/profileApi';
 import { tokenStore } from '../services/tokenStore';
 import type { PublicUser } from '../types/auth';
 
@@ -12,6 +13,7 @@ interface AuthContextValue {
    * tela de login usa isso para mostrar um aviso e depois limpa a flag. */
   sessionJustExpired: boolean;
   clearSessionExpiredFlag: () => void;
+  refreshUser: () => Promise<PublicUser | null>;
   login: (email: string, password: string, remember: boolean) => Promise<PublicUser>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -73,6 +75,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const clearSessionExpiredFlag = useCallback(() => setSessionJustExpired(false), []);
 
+  const refreshUser = useCallback(async () => {
+    const profile = await profileApi.getProfile();
+    const nextUser = {
+      id: profile.id,
+      name: profile.name,
+      email: profile.email,
+      role: profile.role as PublicUser['role'],
+      status: user?.status ?? 'ATIVO',
+      photoUrl: profile.photoUrl,
+      subscriptionPlan: profile.subscriptionPlan,
+      accessExpiresAt: profile.accessExpiresAt,
+      approved: profile.approved,
+      approvedAt: profile.approvedAt,
+    } satisfies PublicUser;
+    setUser(nextUser);
+    return nextUser;
+  }, [user?.status]);
+
   return (
     <AuthContext.Provider
       value={{
@@ -81,6 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isBootstrapping,
         sessionJustExpired,
         clearSessionExpiredFlag,
+        refreshUser,
         login,
         register,
         logout,

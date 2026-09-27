@@ -13,10 +13,13 @@ export const updatePreferencesSchema = z.object({
     .object({
       fontSize: z.enum(['small', 'medium', 'large', 'extra-large']).optional(),
       highContrast: z.boolean().optional(),
+      largerText: z.boolean().optional(),
+      reducedMotion: z.boolean().optional(),
       reduceMotion: z.boolean().optional(),
       screenReaderOptimized: z.boolean().optional(),
       captionsEnabled: z.boolean().optional(),
       soundFeedback: z.boolean().optional(),
     })
+    .passthrough()
     .optional(),
 });

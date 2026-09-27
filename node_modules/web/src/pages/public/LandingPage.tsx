@@ -12,6 +12,7 @@ import { FinalCta } from './sections/FinalCta';
 export function LandingPage() {
   return (
     <>
+      <a href="#conteudo" className="skipLink">Pular para o conteúdo</a>
       <PublicHeader />
       <main id="conteudo">
         <Hero />

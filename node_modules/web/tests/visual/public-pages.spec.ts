@@ -4,9 +4,20 @@ test.describe('experiência pública', () => {
   test('landing desktop mantém a composição principal', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'chromium-desktop', 'Cenário exclusivo do viewport desktop.');
     await page.goto('/');
-    await expect(page).toHaveTitle(/OAB Mentoria/);
+    await expect(page).toHaveTitle(/OAB Legacy/);
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expect(page.locator('main')).toHaveScreenshot('landing-desktop.png', { fullPage: true });
+  });
+
+  test('skip link permite pular diretamente para o conteúdo', async ({ page }) => {
+    await page.goto('/');
+    const skipLink = page.locator('a[href="#conteudo"]');
+    await expect(skipLink).toHaveCount(1);
+    await skipLink.focus();
+    await expect(skipLink).toBeVisible();
+    await expect(skipLink).toHaveText(/Pular para o conteúdo/i);
+    await skipLink.click();
+    await expect(page.locator('#conteudo')).toBeInViewport();
   });
 
   test('landing mobile abre e fecha o menu acessível', async ({ page }, testInfo) => {

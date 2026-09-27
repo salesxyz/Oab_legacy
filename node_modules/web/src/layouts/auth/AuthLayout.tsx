@@ -11,7 +11,9 @@ interface AuthLayoutProps {
 
 export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
   return (
-    <div className={styles.page}>
+    <>
+      <a href="#conteudo" className="skipLink">Pular para o conteúdo</a>
+      <div className={styles.page}>
       <aside className={styles.brandPanel}>
         <BrandMark className={styles.logo} tone="light" aria-label="Voltar ao início" />
 
@@ -27,7 +29,7 @@ export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
         </div>
       </aside>
 
-      <main className={styles.formPanel}>
+      <main id="conteudo" className={styles.formPanel}>
         <BrandMark className={styles.mobileLogo} aria-label="Voltar ao início" />
 
         <div className={styles.formCard}>
@@ -37,5 +39,6 @@ export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
         </div>
       </main>
     </div>
+    </>
   );
 }

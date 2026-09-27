@@ -20,7 +20,32 @@ import './styles/reset.css';
 import './styles/tokens.css';
 import './styles/global.css';
 
+import {
+  applyAccessibilitySettings,
+  getEffectiveAccessibilitySettings,
+} from './utils/accessibility';
 import App from './App';
+
+const syncAccessibilityFromSystem = () => {
+  applyAccessibilitySettings(getEffectiveAccessibilitySettings());
+};
+
+syncAccessibilityFromSystem();
+
+if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const contrast = window.matchMedia('(prefers-contrast: more), (forced-colors: active)');
+
+  const onChange = () => syncAccessibilityFromSystem();
+
+  if (typeof reducedMotion.addEventListener === 'function') {
+    reducedMotion.addEventListener('change', onChange);
+    contrast.addEventListener('change', onChange);
+  } else {
+    reducedMotion.addListener(onChange);
+    contrast.addListener(onChange);
+  }
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

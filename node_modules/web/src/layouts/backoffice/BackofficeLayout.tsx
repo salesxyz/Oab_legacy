@@ -18,7 +18,9 @@ export function BackofficeLayout() {
   const portalName = isAdmin ? 'Console administrativo' : 'Espaço do professor';
   const initials = user.name.split(' ').slice(0, 2).map((part) => part[0]).join('').toUpperCase();
   return (
-    <div className={styles.shell}>
+    <>
+      <a href="#conteudo" className="skipLink">Pular para o conteúdo</a>
+      <div className={styles.shell}>
       <aside className={styles.sidebar}>
         <BrandMark className={styles.brand} tone="light" aria-label="Voltar ao início" />
         <div className={styles.portalTag}>{portalName}</div>
@@ -32,11 +34,12 @@ export function BackofficeLayout() {
           <div><BrandMark className={styles.mobileBrand} aria-label="Voltar ao início" /><p className={styles.topbarTitle}>{portalName}</p></div>
           <div className={styles.userChip}><span className={styles.avatar}>{initials}</span><span className={styles.userName}>{user.name}</span></div>
         </header>
-        <main className={styles.content}><Outlet /></main>
+        <main id="conteudo" className={styles.content}><Outlet /></main>
         <nav className={styles.mobileNav} aria-label="Navegação do painel">
           {navItems.map(({ to, label, icon: Icon, end }) => <NavLink key={to} to={to} end={end} className={({ isActive }) => `${styles.mobileNavLink} ${isActive ? styles.mobileActive : ''}`}><Icon size={19} /><span>{label}</span></NavLink>)}
         </nav>
       </div>
     </div>
+    </>
   );
 }

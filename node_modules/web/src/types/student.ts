@@ -162,6 +162,10 @@ export interface FullProfile {
   email: string;
   photoUrl: string | null;
   role: string;
+  subscriptionPlan: 'BASICO' | 'VITALICIO' | null;
+  accessExpiresAt: string | null;
+  approved: boolean;
+  approvedAt: string | null;
   createdAt: string;
   profile: {
     goal: string | null;

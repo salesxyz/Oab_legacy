@@ -6,17 +6,26 @@
 .sidebar {
   display: none;
   flex-direction: column;
-  width: 240px;
+  width: 76px;
   flex-shrink: 0;
   background: var(--color-primary);
   padding: var(--space-6) var(--space-4);
+  transition: width 280ms cubic-bezier(0.22, 1, 0.36, 1), padding 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms ease;
+  overflow: hidden;
+  position: relative;
+  z-index: 60;
 }
+
+.sidebar:hover { width: 248px; padding-inline: var(--space-4); box-shadow: var(--shadow-lg); }
+
+.sidebarHeader { display: flex; align-items: center; justify-content: space-between; min-height: 40px; gap: 8px; }
 
 .logo {
   display: flex;
   align-items: center;
   padding: 0 var(--space-2);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-5);
+  min-width: 0;
 }
 
 .logo img {
@@ -26,12 +35,29 @@
   object-fit: contain;
 }
 
+.mobileMenuButton { display: grid; place-items: center; border: 0; border-radius: var(--radius-sm); color: var(--color-text-on-primary-muted); background: transparent; cursor: pointer; }
+.mobileMenuButton:hover { color: var(--color-text-on-primary); background: rgba(247, 248, 250, 0.08); }
+
+.accountSummary { display: flex; align-items: center; gap: 10px; min-height: 48px; margin: 0 0 var(--space-5); padding: 8px; border: 1px solid var(--color-border-on-primary); border-radius: var(--radius-md); color: var(--color-text-on-primary); }
+.accountAvatar { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: var(--color-accent); color: var(--color-primary); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.accountCopy { display: grid; min-width: 0; gap: 2px; }
+.accountCopy strong, .accountCopy span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.accountCopy strong { font-size: 12px; }
+.accountCopy span { color: var(--color-text-on-primary-muted); font-size: 10px; }
+.accountSummary { justify-content: center; padding-inline: 4px; border-color: transparent; }
+.accountCopy, .logo { opacity: 0; width: 0; overflow: hidden; pointer-events: none; transition: opacity 160ms ease, width 280ms cubic-bezier(0.22, 1, 0.36, 1); }
+.sidebar:hover .accountSummary { justify-content: flex-start; padding-inline: 8px; border-color: var(--color-border-on-primary); }
+.sidebar:hover .accountCopy, .sidebar:hover .logo { opacity: 1; width: auto; pointer-events: auto; }
+.sidebar:hover .logo { width: auto; }
+
 .nav {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
   flex: 1;
 }
+
+.navItemSeparated { margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-border-on-primary); }
 
 .navLink {
   display: flex;
@@ -43,6 +69,18 @@
   font-weight: var(--weight-medium);
   color: #9aa7c0;
 }
+
+.navLink > svg, .logoutButton > svg {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+}
+
+.navLabel { overflow: hidden; white-space: nowrap; opacity: 1; transition: opacity var(--transition-fast); }
+.navLabel { width: 0; opacity: 0; transition: opacity 160ms ease, width 280ms cubic-bezier(0.22, 1, 0.36, 1); }
+.navLink, .logoutButton { justify-content: center; }
+.sidebar:hover .navLabel { width: auto; opacity: 1; }
+.sidebar:hover .navLink, .sidebar:hover .logoutButton { justify-content: flex-start; }
 
 .navLinkActive {
   background: rgba(247, 248, 250, 0.08);
@@ -84,6 +122,8 @@
   border-bottom: 1px solid var(--color-border);
   background: var(--color-surface);
 }
+
+.mobileMenuButton { color: var(--color-primary); width: 34px; height: 34px; }
 
 .topbarLogo {
   display: flex;
@@ -140,6 +180,8 @@
   color: var(--color-secondary);
 }
 
+.mobileScrim { display: none; }
+
 .bottomNavLabel {
   font-size: 10px;
   font-weight: var(--weight-medium);
@@ -161,4 +203,22 @@
   .content {
     padding-bottom: 0;
   }
+}
+
+@media (max-width: 899px) {
+  .sidebar { position: fixed; inset: 0 auto 0 0; display: flex; width: min(280px, 86vw); transform: translateX(-105%); transition: transform var(--transition-base); box-shadow: var(--shadow-lg); }
+  .sidebarMobileOpen { transform: translateX(0); }
+  .sidebar .logo { margin-bottom: 0; }
+  .mobileScrim { display: block; position: fixed; inset: 0; z-index: 55; border: 0; background: rgba(11, 31, 58, .42); }
+  .sidebar, .sidebar:hover { width: min(280px, 86vw); padding-inline: var(--space-4); box-shadow: var(--shadow-lg); }
+  .sidebar .logo, .sidebar:hover .logo { opacity: 1; width: auto; pointer-events: auto; }
+  .sidebar .accountSummary, .sidebar:hover .accountSummary { justify-content: flex-start; padding-inline: 8px; border-color: var(--color-border-on-primary); }
+  .sidebar .accountCopy, .sidebar:hover .accountCopy { opacity: 1; width: auto; pointer-events: auto; }
+  .sidebar .navLabel, .sidebar:hover .navLabel { width: auto; opacity: 1; }
+  .sidebar .navLink, .sidebar:hover .navLink, .sidebar .logoutButton, .sidebar:hover .logoutButton { justify-content: flex-start; }
+  .mobileMenuButton { display: grid; }
+}
+
+@media (min-width: 900px) {
+  .mobileMenuButton { display: none; }
 }

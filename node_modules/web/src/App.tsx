@@ -22,6 +22,7 @@ import { SimulationRunnerPage } from './pages/aluno/SimulationRunnerPage';
 import { RankingPage } from './pages/aluno/RankingPage';
 import { ProfilePage } from './pages/aluno/ProfilePage';
 import { SubscriptionPage } from './pages/aluno/SubscriptionPage';
+import { AccessibilityPage } from './pages/aluno/AccessibilityPage';
 import { BackofficeLayout } from './layouts/backoffice/BackofficeLayout';
 import { AdminDashboardPage } from './pages/backoffice/AdminDashboardPage';
 import { AdminResourcePage, type AdminResource } from './pages/backoffice/AdminResourcePage';
@@ -61,6 +62,7 @@ export default function App() {
                 <Route path="/app/ranking" element={<RankingPage />} />
                 <Route path="/app/perfil" element={<ProfilePage />} />
                 <Route path="/app/assinatura" element={<SubscriptionPage />} />
+                <Route path="/app/acessibilidade" element={<AccessibilityPage />} />
               </Route>
               <Route element={<BackofficeLayout />}>
                 <Route path="/admin" element={<AdminDashboardPage />} />

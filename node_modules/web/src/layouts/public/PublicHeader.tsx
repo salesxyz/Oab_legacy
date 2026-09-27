@@ -210,9 +210,30 @@ export function PublicHeader() {
 }
 
 function DropdownNavItem({ label, open, onToggle, children }: { label: string; open: boolean; onToggle: () => void; children: ReactNode }) {
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const firstFocusable = triggerRef.current?.nextElementSibling?.querySelector<HTMLElement>('a, button');
+    firstFocusable?.focus();
+  }, [open]);
+
   return (
     <div className={styles.dropdown}>
-      <button type="button" className={styles.navLink} aria-expanded={open} onClick={onToggle}>
+      <button
+        ref={triggerRef}
+        type="button"
+        className={styles.navLink}
+        aria-expanded={open}
+        onClick={onToggle}
+        onKeyDown={(event) => {
+          if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onToggle();
+          }
+        }}
+      >
         {label}<ChevronIcon open={open} />
       </button>
       {open && <div className={styles.dropdownPanel}>{children}</div>}
@@ -225,9 +246,30 @@ function DropdownLink({ label, href, onClick }: { label: string; href: string; o
 }
 
 function MobileSection({ label, open, onToggle, children }: { label: string; open: boolean; onToggle: () => void; children: ReactNode }) {
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const firstFocusable = triggerRef.current?.nextElementSibling?.querySelector<HTMLElement>('a, button');
+    firstFocusable?.focus();
+  }, [open]);
+
   return (
     <section className={styles.mobileSection}>
-      <button type="button" className={styles.mobileSectionTrigger} aria-expanded={open} onClick={onToggle}>
+      <button
+        ref={triggerRef}
+        type="button"
+        className={styles.mobileSectionTrigger}
+        aria-expanded={open}
+        onClick={onToggle}
+        onKeyDown={(event) => {
+          if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onToggle();
+          }
+        }}
+      >
         {label}<ChevronIcon open={open} />
       </button>
       {open && <div className={styles.mobileSectionContent}>{children}</div>}
